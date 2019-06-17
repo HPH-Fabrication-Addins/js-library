@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: "Lato", Arial;
+}
+
+.tablink {
+    background-color: rgb(151, 148, 148);
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+}
+
+.tablink:hover {
+    background-color: rgb(119, 119, 119);
+}
+
+.tabcontent {
+    display: none;
+    padding: 100px 20px;
+    height: 100%;
+}
+
+#Demo {
+    background-color: rgb(255, 255, 255);
+}
+
+#Code {
+    background-color: rgb(255, 255, 255);
+}
+
+h1 {
+    color: rgb(9, 75, 129);
+}
+
+
+/* body {
+    font-family: "Lato", Arial;
+    margin: 0%;
+    background: url(logo3.png);
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position-x: 127%;
+    background-position-y: 485px;
+} */
+
+.sidenav {
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.sidenav a {
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding-left: 20px;
+}
+
+.sidenav p {
+    padding-left: 15px;
+    padding-bottom: 0px;
+    font-size: 20px;
+    color: rgb(9, 75, 129);
+    display: block;
+}
+
+.sidenav a:hover {
+    background-color: #0627AB;
+    color: white;
+}
+
+.main {
+    margin-left: 220px;
+    top: 20px;
+    height: 100%;
+    font-family: "Lato", Arial;
+}
+
+.button {
+    background-color: #EBEBEB;
+    color: black;
+    border: 1px solid #008CBA;
+    float: inline-end;
+    margin-top: 10px;
+    border-radius: 5px;
+    height: 30px;
+}
+
+button:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+input {
+    display: block;
+    margin: 5px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border: 1px solid #C2C2C2;
+    box-shadow: 1px 1px 4px #EBEBEB;
+    -moz-box-shadow: 1px 1px 4px #EBEBEB;
+    -webkit-box-shadow: 1px 1px 4px #EBEBEB;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    padding: 7px;
+    outline: none;
+}
+
+input:focus {
+    border: 1px solid #008CBA;
+}
+
+select {
+    display: inline;
+    border: 1px solid #008CBA;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border: 1px solid #C2C2C2;
+    box-shadow: 1px 1px 4px #EBEBEB;
+    -moz-box-shadow: 1px 1px 4px #EBEBEB;
+    -webkit-box-shadow: 1px 1px 4px #EBEBEB;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    padding: 3px;
+    outline: none;
+    margin: 5px;
+}
+
+select:hover {
+    background: #008CBA;
+    color: #fff;
+}

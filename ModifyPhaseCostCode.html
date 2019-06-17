@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="demo.js"></script>
+    <script type="text/javascript" src="cinx.js"></script>
+</head>
+
+<body>
+    <div id="sidenavId" class="sidenav"></div>
+    <div id="main" class="main">
+        <h1>Modify Project Phase/Cost Code</h1>
+        <div class="tab">
+            <button class="tablink" onclick="openPage('Demo', this, '#777')" id="defaultOpen">Demo</button>
+            <button class="tablink" onclick="openPage('Code', this, '#777')">Documentation/Code</button>
+        </div>
+        <div id="Demo" class="tabcontent">
+            <label>Organization:
+                    <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
+                </label>
+            <label>Catalog:
+                    <select id='catalogs' name="catalogs" onchange="fillProjectList2();fillCostCodeList2();fillPhaseList2()"></select>
+                </label>
+            <br />
+            <br />
+            <label>Project:
+                    <br/><select id='projects' onchange="fillProjectCostCodeList()"></select>
+                </label>
+            <br/>
+            <label>Phase/Cost Code Guid:
+                    <br/><select id='guid'></select>
+            </label>
+            <br/>
+            <label>Cost Code Name:
+                    <br/><select id='ccname'></select>
+                </label>
+            <br/><label>Phase Name:
+                    <br/><select id='phname'></select>
+                    <br />
+                </label>
+            <label>Percent Complete:
+                <input id='percent' name="percent"></input>
+            </label>
+            <button id="action" class='button' onclick="modifyProjectCost(username, password)">Execute</button>
+            <br />
+            <br />
+            <div id="divResponse"></div>
+        </div>
+
+        <div id="Code" class="tabcontent"></div>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    createSidebar();
+    if (IsLogged()) {
+        fillOrganizationList();
+        fillCatalogList(0);
+        fillProjectList2();
+        fillCostCodeList2();
+        fillPhaseList2();
+    } else {
+        document.getElementById("action").disabled = true;
+    }
+    document.getElementById("defaultOpen").click();
+</script>
+
+</html>
