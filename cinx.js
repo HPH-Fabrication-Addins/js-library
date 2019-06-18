@@ -95,7 +95,7 @@ function GetVendorList(username, password, b2bId) {
 }
 
 function GetVendorDetails(username, password, b2bId, commerceId) {
-    return fetch(`${apiPath}/sub/${b2bId}/vendor/${commerceId}'/details`, {
+    return fetch(`${apiPath}/sub/${b2bId}/vendor/${commerceId}/details`, {
         method: "GET",
         credentials: "include",
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(username + ":" + password) }
