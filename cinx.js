@@ -141,3 +141,27 @@ function DeleteProject(username, password, b2bId, projectId) {
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(username + ":" + password) }
     })
 }
+
+function GetNewCatalogUpdates(username, password, appId) {
+    return fetch(`${apiPath}/sub/${appId}/ipu/updates/new`, {
+        method: "GET",
+        credentials: "include",
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(username + ":" + password) }
+    })
+}
+
+function DownloadCatalogUpdateFile(username, password, appId, updateId) {
+    return fetch(`${apiPath}/sub/${appId}/ipu/update/download/${updateId}/data-file`, {
+        method: "GET",
+        credentials: "include",
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(username + ":" + password) }
+    })
+}
+
+function MarkCatalogUpdateAsApplied(username, password, appId, updateId, values) {
+    return fetch(`${apiPath}/sub/${appId}/ipu/update/apply/${updateId}?values=${values}`, {
+        method: "GET",
+        credentials: "include",
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(username + ":" + password) }
+    })
+}

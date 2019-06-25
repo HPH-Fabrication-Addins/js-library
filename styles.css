@@ -54,11 +54,11 @@ h1 {
 } */
 
 .sidenav {
-    width: 200px;
+    width: 180px;
     background-color: #f1f1f1;
+    overflow: auto;
     position: fixed;
     height: 100%;
-    overflow: auto;
 }
 
 .sidenav a {

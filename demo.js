@@ -1,6 +1,7 @@
 var username = "burim.ratkoceri@gmail.com";
 var password = "cinx123";
 var apiPath = "https://api.cinx.com";
+var appId = "5d63bd32-3407-c76c-6fb1-690be3597ff2"
 
 //Change tabs
 function openPage(pageName, elmnt, color) {
@@ -460,8 +461,39 @@ function modifyVendor(username, password) {
         });
 }
 
+function showNewCatalogUpdates(username, password) {
+    document.getElementById("divResponse").innerHTML = "";
+    GetNewCatalogUpdates(username, password, appId)
+        .then(function(response) { return response.json() })
+        .then(function(json) {
+            console.log(json);
+            document.getElementById("divResponse").innerHTML += "<ul>";
+            json.rows.forEach(el => {
+                document.getElementById("divResponse").innerHTML += `<li><b>Title: </b>${el.title} <b>Published Date: </b>${el.date_published} <b>File ID: </b>${el.cinx_id.id} 
+                <button class="button" onclick="downloadCatalogUpdateFile(username, password, '${el.cinx_id.id}')">Download</button> 
+                <button class="button" onclick="markCatalogUpdateAsApplied(username, password, '${el.cinx_id.id}')">Mark Applied</button></li><br/>`;
+            });
+            document.getElementById("divResponse").innerHTML += "</ul>";
+        });
+}
 
+function downloadCatalogUpdateFile(username, password, updateId) {
+    DownloadCatalogUpdateFile(username, password, appId, updateId)
+        .then(function(response) {
+            return response.blob();
+        }).then(function(blob) {
+            download(blob);
+        });
+}
 
+function markCatalogUpdateAsApplied(username, password, updateId) {
+    var values = `{"applied_date":"2019-06-21", "download_date":"2019-06-21"}`;
+    MarkCatalogUpdateAsApplied(username, password, appId, updateId, values)
+        .then(function(response) { return response.json() })
+        .then(function(json) {
+            console.log(json);
+        });
+}
 
 function fillProjects(id) {
     document.getElementById(id).innerHTML = '';
@@ -504,7 +536,9 @@ function createSidebar() {
   <a href="VendorDetails.html">Vendor Details</a>
   <a href="AddVendor.html">Create Vendor</a>
   <a href="ModifyVendor.html">Modify Vendor</a>
-  <!--<a href="DeleteVendor.html">Delete Vendor</a>-->`;
+  <!--<a href="DeleteVendor.html">Delete Vendor</a>-->
+  <p>Catalog Updates</p>
+  <a href="CatalogUpdates.html">List New Updates</a>`;
 }
 
 
