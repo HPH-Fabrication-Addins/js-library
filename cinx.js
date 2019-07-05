@@ -5,7 +5,7 @@ function PingCinx() {
 
 //Subscriptions
 function GetSubscriptions(username, password) {
-    return fetch(`${apiPath}/sub/user/subscriptions/`, {
+    return fetch(`https://api.cinx.com/sub/user/subscriptions/`, {
         method: "GET",
         credentials: "include",
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(username + ":" + password) }
@@ -47,7 +47,7 @@ function CreateOrModifyJobCostCostCode(username, password, b2bId, values) {
 
 //Projects
 function GetProjectList(username, password, b2bId) {
-    return fetch(`${apiPath}/sub/${b2bId}/boms?type=pml`, {
+    return fetch(`https://api.cinx.com/sub/${b2bId}/boms?type=pml`, {
         method: "GET",
         credentials: "include",
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(username + ":" + password) }

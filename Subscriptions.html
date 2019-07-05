@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
     <script type="text/javascript" src="demo.js"></script>
     <script type="text/javascript" src="cinx.js"></script>
 </head>
@@ -12,24 +13,40 @@
     <div id="sidenavId" class="sidenav"></div>
     <div id="main" class="main">
         <h1>Subscriptions</h1>
-        <div class="tab">
+        <!-- <div class="tab">
             <button class="tablink" onclick="openPage('Demo', this, '#777')" id="defaultOpen">Demo</button>
             <button class="tablink" onclick="openPage('Code', this, '#777')">Documentation/Code</button>
-        </div>
-        <div id="Demo" class="tabcontent">
-            <button class="button" onclick="showSubscriptions(username, password)">Execute</button>
+        </div> -->
+        <div id="Demo">
+            <button class="button" onclick="showSubscriptions()">Execute</button>
             <br />
             <br />
             <div id="divResponse"></div>
         </div>
         <div id="Code" class="tabcontent">
-            <iframe src="https://bratkoceri.github.io/cinxjs/#/Ping.md" style="height:100%;width:100%;border:none;"></iframe>
+
         </div>
     </div>
 </body>
 <script type="text/javascript">
     createSidebar();
-    document.getElementById("defaultOpen").click();
+
+    function showSubscriptions() {
+        document.getElementById('divResponse').innerHTML = '';
+        cinxApi.getSubscriptions()
+            .then(function(response) {
+                console.log(response);
+                window.localStorage.setItem('guids', JSON.stringify(response));
+                response.rows.forEach(el => {
+                    document.getElementById('divResponse').innerHTML += `<h3>Organization:${el.org.names.primary}</h3></hr><ul>`;
+                    el.apps.forEach(ap => {
+                        var li = `<li><b>Application Name: </b>${ap.name}<b> Data Source Name: </b>${ap.data_source_name}<b> Type: </b>${ap.type}</li>`;
+                        document.getElementById('divResponse').innerHTML += li;
+                    });
+                    document.getElementById('divResponse').innerHTML += '</ul>';
+                });
+            });
+    }
 </script>
 
 </html>

@@ -1,7 +1,8 @@
-var username = "burim.ratkoceri@gmail.com";
-var password = "cinx123";
-var apiPath = "https://api.cinx.com";
 var appId = "5d63bd32-3407-c76c-6fb1-690be3597ff2"
+var cinxApi = new CinxApi();
+cinxApi.setCredentials('burim.ratkoceri@gmail.com', 'cinx123');
+
+
 
 //Change tabs
 function openPage(pageName, elmnt, color) {
@@ -132,18 +133,7 @@ function fillPhaseList2() {
         });
 }
 
-//Ping CINX
-function ping() {
-    document.getElementById('divResponse').innerHTML = '';
-    PingCinx()
-        .then(function(response) { return response.json() })
-        .then(function(json) {
-            console.log(json);
-            json.rows.forEach(el => {
-                document.getElementById('divResponse').innerHTML += `<p>Status: ${el.status}</p><p>Message: ${el.message}</p>`;
-            });
-        });
-}
+
 
 //Login to CINX
 function showSubscriptions(username, password) {
@@ -463,6 +453,7 @@ function modifyVendor(username, password) {
 
 function showNewCatalogUpdates(username, password) {
     document.getElementById("divResponse").innerHTML = "";
+    var fileType = document.getElementById("type").value;
     GetNewCatalogUpdates(username, password, appId)
         .then(function(response) { return response.json() })
         .then(function(json) {
@@ -470,8 +461,11 @@ function showNewCatalogUpdates(username, password) {
             document.getElementById("divResponse").innerHTML += "<ul>";
             json.rows.forEach(el => {
                 document.getElementById("divResponse").innerHTML += `<li><b>Title: </b>${el.title} <b>Published Date: </b>${el.date_published} <b>File ID: </b>${el.cinx_id.id} 
-                <button class="button" onclick="downloadCatalogUpdateFile(username, password, '${el.cinx_id.id}')">Download</button> 
-                <button class="button" onclick="markCatalogUpdateAsApplied(username, password, '${el.cinx_id.id}')">Mark Applied</button></li><br/>`;
+                <button class="button" onclick="downloadCatalogUpdateFile(username, password, '${el.cinx_id.id}')">Download</button>`;
+                if (fileType !== "Applied") {
+                    document.getElementById("divResponse").innerHTML += `<button class="button" onclick="markCatalogUpdateAsApplied(username, password, '${el.cinx_id.id}')">Mark Applied</button></li><br/>`;
+                }
+
             });
             document.getElementById("divResponse").innerHTML += "</ul>";
         });
@@ -484,6 +478,7 @@ function downloadCatalogUpdateFile(username, password, updateId) {
         }).then(function(blob) {
             download(blob);
         });
+
 }
 
 function markCatalogUpdateAsApplied(username, password, updateId) {
@@ -531,6 +526,7 @@ function createSidebar() {
   <a href="ListProjectCosts.html">List Phases/Costs Codes</a>
   <a href="CreatePhaseCostCode.html">Create Phase/Cost Code</a>
   <a href="ModifyPhaseCostCode.html">Modify Phase/Cost Code</a>
+  <a href="requisition.html">Create Requisition</a>
   <p>Vendors</p>
   <a href="VendorList.html">List Vendors</a>
   <a href="VendorDetails.html">Vendor Details</a>
