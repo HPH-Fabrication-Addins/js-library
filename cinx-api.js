@@ -76,7 +76,12 @@ var CinxApi = (function() {
                 if (request.readyState === 4) {
                     var data = null;
                     try {
-                        data = request.responseText ? JSON.parse(request.responseText) : '';
+                        if (requestData.download) {
+                            data = request.responseText;
+                        } else {
+                            data = request.responseText ? JSON.parse(request.responseText) : '';
+                        }
+
                     } catch (e) {
                         console.error(e);
                     }
@@ -123,6 +128,22 @@ var CinxApi = (function() {
         return runRequest(requestData, callback);
     };
 
+    Constructor.prototype.getSubscriptions = function(callback) {
+        var requestData = {
+            url: `${apiServer}/sub/user/subscriptions`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.postNewProject = function(b2bId, values, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/project/create?values=${values}`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
     Constructor.prototype.putRequisition = function(b2bId, requisition, callback) {
         var requestData = {
             url: `${apiServer}/sub/${b2bId}/partner/exec/cinx/json-req-import`,
@@ -133,13 +154,154 @@ var CinxApi = (function() {
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.getSubscriptions = function(callback) {
+    //Vendors
+    Constructor.prototype.getVendors = function(b2bId, callback) {
         var requestData = {
-            url: `${apiServer}/sub/user/subscriptions`,
+            url: `${apiServer}/sub/${b2bId}/vendors`,
             authenticated: true
         };
         return runRequest(requestData, callback);
     };
+
+    Constructor.prototype.getVendorDetails = function(b2bId, commerceId, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/vendor/${commerceId}/details`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.postNewVendor = function(b2bId, values, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/private/vendor/create?values=${values}`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.modifyVendor = function(b2bId, vendorId, values, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/private/vendor/${vendorId}/modify?values=${values}`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    //Catalogs
+    Constructor.prototype.getCatalogUpdates = function(appId, updateType, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${appId}/ipu/updates/${updateType}`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+    Constructor.prototype.getCatalogUpdateFile = function(appId, updateId, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${appId}/ipu/update/download/${updateId}/data-file`,
+            authenticated: true,
+            download: true
+        };
+        return runRequest(requestData, callback);
+    };
+    Constructor.prototype.setCatalogUpdateFileApplied = function(appId, updateId, values, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${appId}/ipu/update/apply/${updateId}?values=${values}`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    //Job Costs
+    Constructor.prototype.putJobCostCostCode = function(b2bId, values, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/org-job-cost/modify/material-cost-codes?values=${values}`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.getJobCostCostCodes = function(b2bId, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/org-job-cost/get-list/material-cost-codes`,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.getJobCostPhases = function(b2bId, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/org-job-cost/get-list/phases`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.putJobCostPhase = function(b2bId, values, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/org-job-cost/modify/phases?values=${values}`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    //Projects
+    Constructor.prototype.getProjects = function(b2bId, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/boms?type=pml`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.getProjectDetails = function(b2bId, projectId, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/project/${projectId}/details`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.modifyProject = function(b2bId, projectId, values, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/project/${projectId}/modify?values=${values}`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.deleteProject = function(b2bId, projectId, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/project/${projectId}/delete`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.getProjectCosts = function(b2bId, projectId, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/project/${projectId}/cost-codes`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.putProjectCost = function(b2bId, projectId, values, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/project/${projectId}/cost-code/create?values=${values}`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.modifyProjectCost = function(b2bId, pccGuid, values, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${b2bId}/project-cost-code/${pccGuid}/modify?values=${values}`,
+            authenticated: true
+        };
+        return runRequest(requestData, callback);
+    };
+
 
     Constructor.prototype.setCredentials = function(user, pwd) {
         username = user;

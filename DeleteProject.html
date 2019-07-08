@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="Styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
     <script type="text/javascript" src="demo.js"></script>
     <script type="text/javascript" src="cinx.js"></script>
 </head>
@@ -13,11 +14,7 @@
     <div id="sidenavId" class="sidenav"></div>
     <div id="main" class="main">
         <h1>Delete Project</h1>
-        <div class="tab">
-            <button class="tablink" onclick="openPage('Demo', this, '#777')" id="defaultOpen">Demo</button>
-            <button class="tablink" onclick="openPage('Code', this, '#777')">Documentation/Code</button>
-        </div>
-        <div id="Demo" class="tabcontent">
+        <div id="Demo">
             <label>Organization:
                     <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
                 </label>
@@ -27,7 +24,7 @@
             <label>Project:
                     <select id='projects' name="projects"></select>
                 </label>
-            <button id="action" class='button' onclick="deleteProject(username, password)">Execute</button>
+            <button id="action" class='button' onclick="deleteProject()">Execute</button>
             <br/>
             <br/>
             <div id="divResponse"> </div>
@@ -47,7 +44,20 @@
     } else {
         document.getElementById("action").disabled = true;
     }
-    document.getElementById("defaultOpen").click();
+
+    function deleteProject() {
+        document.getElementById("divResponse").innerHTML = "";
+
+        var selected2b = document.getElementById('catalogs').value;
+        var selectedProject = document.getElementById('projects').value;
+
+        cinxApi.deleteProject(username, password, selected2b, selectedProject)
+            .then(function(response) {
+                console.log(response);
+                document.getElementById("divResponse").innerHTML += `Project <b>${selectedProject}</b> was deleted`;
+
+            });
+    }
 </script>
 
 </html>

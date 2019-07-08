@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
     <script type="text/javascript" src="demo.js"></script>
     <script type="text/javascript" src="cinx.js"></script>
 </head>
@@ -12,11 +13,7 @@
     <div id="sidenavId" class="sidenav"></div>
     <div id="main" class="main">
         <h1>Create Job Cost Phase</h1>
-        <div class="tab">
-            <button class="tablink" onclick="openPage('Demo', this, '#777')" id="defaultOpen">Demo</button>
-            <button class="tablink" onclick="openPage('Code', this, '#777')">Documentation/Code</button>
-        </div>
-        <div id="Demo" class="tabcontent">
+        <div id="Demo">
             <label>Organization:
                 <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
             </label>
@@ -40,13 +37,12 @@
                 </label>
                 <br />
                 <br />
-                <button class="button" id="action" onclick="createOrModifyPhase(username, password)">Execute</button>
+                <button class="button" id="action" onclick="createOrModifyPhase()">Execute</button>
                 <br />
                 <br />
             </div>
             <div id="divResponse"></div>
         </div>
-        <div id="Code" class="tabcontent"></div>
     </div>
     </div>
 </body>
@@ -58,7 +54,6 @@
     } else {
         document.getElementById("action").disabled = true;
     }
-    document.getElementById("defaultOpen").click();
 </script>
 
 </html>

@@ -19,6 +19,7 @@ function GetJobCostPhases(username, password, b2bId) {
         credentials: "include",
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(username + ":" + password) }
     })
+
 }
 
 function CreateOrModifyJobCostPhase(username, password, b2bId, values) {

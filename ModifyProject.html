@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
     <script type="text/javascript" src="demo.js"></script>
     <script type="text/javascript" src="cinx.js"></script>
 </head>
@@ -13,12 +14,7 @@
     <div id="sidenavId" class="sidenav"></div>
     <div id="main" class="main">
         <h1>Modify Project</h1>
-        <div class="tab">
-            <button class="tablink" onclick="openPage('Demo', this, '#777')" id="defaultOpen">Demo</button>
-            <button class="tablink" onclick="openPage('Code', this, '#777')">Documentation/Code</button>
-        </div>
-
-        <div id="Demo" class="tabcontent">
+        <div id="Demo">
             <label>Organization:
                     <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
             </label>
@@ -57,7 +53,7 @@
                     </label>
                 <br />
                 <br />
-                <button class="button" id="action" onclick="modifyProject(username, password)">Execute</button>
+                <button class="button" id="action" onclick="modifyProject()">Execute</button>
                 <br/>
                 <br/>
                 <div id="divResponse"></div>
@@ -66,8 +62,6 @@
             <br />
         </div>
     </div>
-    <div id="Code" class="tabcontent"></div>
-
 </body>
 
 <script type="text/javascript">
@@ -79,7 +73,25 @@
     } else {
         document.getElementById("action").disabled = true;
     }
-    document.getElementById("defaultOpen").click();
+
+    function modifyProject() {
+        document.getElementById("divResponse").innerHTML = "";
+
+        var selected2b = document.getElementById('catalogs').value;
+        var selectedProject = document.getElementById('projects').value;
+        var pName = document.getElementById('name').value;
+        var pDescription = document.getElementById('description').value;
+        var pNumber = document.getElementById('number').value;
+        var pStatus = document.getElementById('status').value;
+        var values = `{"name":"${pName}","description":"${pDescription}","number":"${pNumber}","status":"${pStatus}"}`;
+
+        cinxApi.modifyProject(selected2b, selectedProject, values)
+            .then(function(response) {
+                console.log(response);
+                document.getElementById("divResponse").innerHTML += `Project <b>${selectedProject}</b> was modified`;
+
+            });
+    }
 </script>
 
 </html>

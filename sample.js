@@ -1,55 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <script type="text/javascript" src="cinx-api.js"></script>
-    <script type="text/javascript" src="demo.js"></script>
-    <script type="text/javascript" src="cinx.js"></script>
-</head>
-
-<body>
-    <div id="sidenavId" class="sidenav"></div>
-
-    <div id="main" class="main">
-        <h1>Create Requisition</h1>
-        <div class="tab">
-            <button class="tablink" onclick="openPage('Demo', this, '#777')" id="defaultOpen">Demo</button>
-            <button class="tablink" onclick="openPage('Code', this, '#777')">Documentation/Code</button>
-        </div>
-
-        <div id="Demo" class="tabcontent">
-
-            <label>Organization:
-                        <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
-                    </label>
-            <label>Catalog:
-                        <select id='catalogs' name="catalogs"></select>
-                    </label>
-            <br />
-            <br />
-            <div>
-            </div>
-
-            <br/>
-            <br/>
-            <button class="button" id="action" onclick="createRequisition()">Execute</button>
-            <br/>
-            <br/>
-            <div id="divResponse"></div>
-        </div>
-
-        <div id="Code" class="tabcontent"></div>
-
-    </div>
-
-    </div>
-
-</body>
-
-<script type="text/javascript">
-    var template = `{
+var template = `{
 	"doc_info": {
 		"type": "JSON-REQ-IMPORT-TEMPLATE",
 		"description": "API template for creating a CINX Requisition.",
@@ -58,16 +7,16 @@
 	},
 	"template": {
 		"cinx_guid": "",
-		"number": "", X
-		"name": "", X
+		"number": "",
+		"name": "",
 		"description": "",
 		"tx_sub_type": "",
 		"user_comment": "",
 		"procurement_status": "OPEN",
-		"allow_substitutes": "true", X
+		"allow_substitutes": "true",
 		"cinx_user_guid_assign_to": "",
 		"dates": {
-			"need_by": "", X
+			"need_by": "",
 			"approved": "",
 			"closed": ""
 		},
@@ -91,7 +40,7 @@
 			"fob_type": "",
 			"ship_from": "",
 			"attention": "",
-			"location_type": "JOB SITE", X
+			"location_type": "JOB SITE",
 			"location_name": "",
 			"instructions": ""
 		},
@@ -117,16 +66,16 @@
 		"value": ""
 	},
 	"item_template":{
-			"quantity": "", X
-			"need_by_date": "", X
-			"allow_substitutes": "true", X
-			"hph_code": "", X
+			"quantity": "",
+			"need_by_date": "",
+			"allow_substitutes": "true",
+			"hph_code": "",
 			"org_item_id": "",
 			"org_system_id": "",
 			"mfr_part_number": "",
 			"upc": "",
 			"size": "",
-			"description": "", X
+			"description": "",
 			"mfr_name": "",
 			"item_type": "",
 			"vendor": {
@@ -139,16 +88,16 @@
 			},
 			"delivery": {
 				"deliver_to": "",
-				"location_type": "JOB SITE", X
+				"location_type": "JOB SITE",
 				"instructions": "",
 				"labeling_instructions": "",
 				"packaging_instructions": ""
 			},
 			"work_breakdown": {
 				"work_order_id": "",
-				"work_order_name": "", X
+				"work_order_name": "",
 				"spool_id": "",
-				"spool_number": "", 
+				"spool_number": "",
 				"building_name": "",
 				"level": "",
 				"space": "",
@@ -221,75 +170,30 @@
 	}]
 }`;
 
-    createSidebar();
-    if (IsLogged()) {
-        fillOrganizationList('organizations');
-        fillCatalogList(0);
-    } else {
-        document.getElementById("action").disabled = true;
+function createRequisition() {
+    const Http = new XMLHttpRequest();
+    const url = 'https://api.dev.cinx.biz/sub/99478956-9ec5-68e7-b74f-ab017ce7aec5/partner/exec/cinx/json-req-import';
+    Http.open("POST", url);
+    Http.setRequestHeader('Authorization', 'Basic ' + btoa('burim.ratkoceri@gmail.com' + ':' + 'cinx123'));
+    Http.setRequestHeader('Content-Type', 'application/json');
+
+    var requisition = JSON.parse(template).template;
+    var item = JSON.parse(template).item_template;
+
+    item.quantity = 2;
+    item.hph_code = 'HPH123';
+    console.log(item);
+
+    requisition.number = 'REQ123';
+    requisition.name = 'REQUISITION 123';
+    requisition.project.number = 'C2NR';
+
+    requisition.items.push(item);
+    console.log(requisition);
+
+    Http.send(JSON.stringify(requisition));
+
+    Http.onreadystatechange = (e) => {
+        console.log(Http.responseText)
     }
-    document.getElementById("defaultOpen").click();
-
-    function removeEmptyProperties(obj) {
-        Object.keys(obj).forEach(function(key) {
-            if (obj[key] && typeof obj[key] === 'object') removeEmptyProperties(obj[key]); //recursive for objects
-            else if (obj[key] == null || obj[key] == "") delete obj[key]; //remove empty properties
-            if (typeof obj[key] === 'object' && Object.keys(obj[key]).length == 0) delete obj[key]; //remove empty objects
-        });
-    };
-
-    function createRequisition1() {
-        document.getElementById('divResponse').innerHTML = '';
-
-        var b2b = document.getElementById('catalogs').value;
-        console.log(b2b);
-        var requisition = JSON.parse(template).template;
-        var item = JSON.parse(template).item_template;
-
-        item.quantity = 2;
-        item.hph_code = 'HPH123';
-        console.log(item);
-
-        requisition.number = 'REQ123';
-        requisition.name = 'REQUISITION 123';
-        requisition.project.number = 'C2NR';
-
-        requisition.items.push(item);
-        //removeEmptyProperties(requisition);
-        console.log(requisition);
-        cinxApi.putRequisition(b2b, requisition)
-            .then(function(response) {
-                console.log(response);
-            });
-    }
-
-    function createRequisition() {
-        const Http = new XMLHttpRequest();
-        const url = 'https://api.dev.cinx.biz/sub/dfed7d88-adf8-5356-8029-fe061c93d0fe/partner/exec/cinx/json-req-import';
-        Http.open("POST", url);
-        Http.setRequestHeader('Authorization', 'Basic ' + btoa('willstone@cinx.com' + ':' + 'mcphaul18'));
-        Http.setRequestHeader('Content-Type', 'application/json');
-
-        var requisition = JSON.parse(template).template;
-        var item = JSON.parse(template).item_template;
-
-        item.quantity = 2;
-        item.hph_code = 'HPH123';
-        console.log(item);
-
-        requisition.number = 'REQ123';
-        requisition.name = 'REQUISITION 123';
-        requisition.project.number = 'HQ Oct 23';
-
-        requisition.items.push(item);
-        console.log(requisition);
-
-        Http.send(JSON.stringify(requisition));
-
-        Http.onreadystatechange = (e) => {
-            console.log(Http.responseText)
-        }
-    }
-</script>
-
-</html>
+}

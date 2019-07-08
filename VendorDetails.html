@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="Styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
     <script type="text/javascript" src="demo.js"></script>
     <script type="text/javascript" src="cinx.js"></script>
 </head>
@@ -17,12 +18,7 @@
     <div id="main" class="main">
 
         <h1>Vendor Details</h1>
-        <div class="tab">
-            <button class="tablink" onclick="openPage('Demo', this, '#777')" id="defaultOpen">Demo</button>
-            <button class="tablink" onclick="openPage('Code', this, '#777')">Documentation/Code</button>
-        </div>
-
-        <div id="Demo" class="tabcontent" style="display: block;">
+        <div id="Demo">
             <label>Organization:
                 <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
             </label>
@@ -34,16 +30,12 @@
 
         </select>
 
-            <button id="action" class="button" onclick="vendorDetails(username, password)">Execute</button>
+            <button id="action" class="button" onclick="vendorDetails()">Execute</button>
             <br />
             <br />
             <div id="divResponse">
 
             </div>
-        </div>
-
-        <div id="Demo" class="tabcontent">
-
         </div>
     </div>
 
@@ -58,7 +50,25 @@
     } else {
         document.getElementById("action").disabled = true;
     }
-    document.getElementById("defaultOpen").click();
+
+    function vendorDetails() {
+        document.getElementById("divResponse").innerHTML = "";
+        var selected2b = document.getElementById('catalogs').value;
+        var selectedVendor = document.getElementById('vendors').value;
+        var logo;
+        cinxApi.getVendorDetails(selected2b, selectedVendor)
+            .then(function(response) {
+                console.log(response);
+                document.getElementById("divResponse").innerHTML += "<ul>";
+                response.rows.forEach(el => {
+                    logo = el.marketing.logo;
+                    document.getElementById("divResponse").innerHTML += "<li><b>Name: </b>" + el.names.primary + " <b>Status: </b>" + el.vendor_status + "</li>";
+
+                });
+                document.getElementById("divResponse").innerHTML += "</ul>";
+                document.getElementById("divResponse").innerHTML += "<img src='" + logo + "'/>";
+            });
+    }
 </script>
 
 </html>

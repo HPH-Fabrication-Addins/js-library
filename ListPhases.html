@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
     <script type="text/javascript" src="demo.js"></script>
     <script type="text/javascript" src="cinx.js"></script>
 </head>
@@ -12,11 +13,7 @@
     <div id="sidenavId" class="sidenav"></div>
     <div id="main" class="main">
         <h1>Job Cost - Phase List</h1>
-        <div class="tab">
-            <button class="tablink" onclick="openPage('Demo', this, '#777')" id="defaultOpen">Demo</button>
-            <button class="tablink" onclick="openPage('Code', this, '#777')">Documentation/Code</button>
-        </div>
-        <div id="Demo" class="tabcontent">
+        <div id="Demo">
             <label>Organization:
                 <select id='organizations' onchange="fillCatalogList(this.value)"></select>
             </label>
@@ -25,7 +22,7 @@
             </label>
             <br />
             <br />
-            <button class="button" id="action" onclick="showPhaseList(username, password)">Execute</button>
+            <button class="button" id="action" onclick="showPhaseList()">Execute</button>
             <br />
             <br />
             <div id="divResponse"></div>
@@ -41,7 +38,18 @@
     } else {
         document.getElementById("action").disabled = true;
     }
-    document.getElementById("defaultOpen").click();
+
+    function showPhaseList() {
+        document.getElementById('divResponse').innerHTML = '';
+        var b2b = document.getElementById('catalogs').value;
+        cinxApi.getJobCostPhases(b2b)
+            .then(function(response) {
+                console.log(response);
+                response.rows.forEach(el => {
+                    document.getElementById('divResponse').innerHTML += `<b> Name: </b>${el.name}<b> Description: </b>${el.description}<b> Status: </b>${el.status}<br/>`;
+                });
+            });
+    }
 </script>
 
 </html>

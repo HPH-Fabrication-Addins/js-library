@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
     <script type="text/javascript" src="demo.js"></script>
     <script type="text/javascript" src="cinx.js"></script>
 </head>
@@ -12,11 +13,7 @@
     <div id="sidenavId" class="sidenav"></div>
     <div id="main" class="main">
         <h1>Modify Job Cost Cost Code</h1>
-        <div class="tab">
-            <button class="tablink" onclick="openPage('Demo', this, '#777')" id="defaultOpen">Demo</button>
-            <button class="tablink" onclick="openPage('Code', this, '#777')">Documentation/Code</button>
-        </div>
-        <div id="Demo" class="tabcontent">
+        <div id="Demo">
             <label>Organization:
                 <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
             </label>
@@ -39,7 +36,7 @@
                     </select>
                 </label>
                 <br />
-                <button class="button" id="action" onclick="createOrModifyCostCode(username, password)">Execute</button>
+                <button class="button" id="action" onclick="createOrModifyCostCode()">Execute</button>
             </div>
             <br />
             <br />
@@ -47,7 +44,6 @@
             <br />
             <br />
         </div>
-        <div id="Code" class="tabcontent"></div>
     </div>
     </div>
 </body>
@@ -60,7 +56,33 @@
     } else {
         document.getElementById("action").disabled = true;
     }
-    document.getElementById("defaultOpen").click();
+
+    function createOrModifyCostCode() {
+        document.getElementById("divResponse").innerHTML = "";
+        var b2b = document.getElementById('catalogs').value;
+        var name = document.getElementById('name').value;
+        var description = document.getElementById('description').value;
+        var status = document.getElementById('status').value;
+        var values = `{"material_cost_codes":[{"name":"${name}","description":"${description}","status":"${status}"}]}`;
+
+        cinxApi.putJobCostCostCode(b2b, values)
+            .then(function(response) {
+                console.log(response);
+                document.getElementById("divResponse").innerHTML += `Cost Code <b>${name}</b> was created/modified.`;
+            });
+    }
+
+    function fillCostCodeList() {
+        document.getElementById('name').innerHTML = '';
+        var b2b = document.getElementById('catalogs').value;
+        cinxApi.getJobCostCostCodes(b2b)
+            .then(function(response) {
+                console.log(response);
+                response.rows.forEach(el => {
+                    document.getElementById('name').innerHTML += `<option value='${el.name}'>${el.name}</option>`;
+                });
+            });
+    }
 </script>
 
 </html>
