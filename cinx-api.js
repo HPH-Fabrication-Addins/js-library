@@ -62,7 +62,10 @@ var CinxApi = (function() {
 
             var type = requestData.type || 'GET';
             request.open(type, requestData.url);
+            if (requestData.download) {
 
+                request.responseType = 'blob';
+            }
             if (requestData.authenticated) {
                 request.withCredentials = true;
                 request.setRequestHeader('Authorization', 'Basic ' + btoa(username + ':' + password));
@@ -77,7 +80,7 @@ var CinxApi = (function() {
                     var data = null;
                     try {
                         if (requestData.download) {
-                            data = request.responseText;
+                            data = new Blob([request.response]);
                         } else {
                             data = request.responseText ? JSON.parse(request.responseText) : '';
                         }
