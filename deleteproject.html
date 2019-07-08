@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="Styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+    <script type="text/javascript" src="cinx.js"></script>
+</head>
+
+<body>
+
+    <div id="sidenavId" class="sidenav"></div>
+    <div id="main" class="main">
+        <h1>Delete Project</h1>
+        <div id="Demo">
+            <label>Organization:
+                    <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
+                </label>
+            <label>Catalog:
+                    <select id='catalogs' name="catalogs"  onchange="fillProjectList()"></select>
+                </label>
+            <label>Project:
+                    <select id='projects' name="projects"></select>
+                </label>
+            <button id="action" class='button' onclick="deleteProject()">Execute</button>
+            <br/>
+            <br/>
+            <div id="divResponse"> </div>
+        </div>
+
+        <div id="Code" class="tabcontent"></div>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    createSidebar();
+    if (IsLogged()) {
+        fillOrganizationList('organizations');
+        fillCatalogList(0);
+        fillProjectList();
+    } else {
+        document.getElementById("action").disabled = true;
+    }
+
+    function deleteProject() {
+        document.getElementById("divResponse").innerHTML = "";
+
+        var selected2b = document.getElementById('catalogs').value;
+        var selectedProject = document.getElementById('projects').value;
+
+        cinxApi.deleteProject(username, password, selected2b, selectedProject)
+            .then(function(response) {
+                console.log(response);
+                document.getElementById("divResponse").innerHTML += `Project <b>${selectedProject}</b> was deleted`;
+
+            });
+    }
+</script>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+    <script type="text/javascript" src="cinx.js"></script>
+</head>
+
+<body>
+    <div id="sidenavId" class="sidenav"></div>
+    <div id="main" class="main">
+        <h1>Ping CINX</h1>
+        <div id="Demo">
+            <br />
+            <br />
+            <button class="button" onclick="ping()">Execute</button>
+            <br />
+            <br />
+            <div id="divResponse"></div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    createSidebar();
+
+    function ping() {
+        document.getElementById('divResponse').innerHTML = '';
+        cinxApi.pingCinx()
+            .then(function(response) {
+                console.log(response);
+                response.rows.forEach(el => {
+                    document.getElementById('divResponse').innerHTML += `<p>Status: ${el.status}</p><p>Message: ${el.message}</p>`;
+                });
+            });
+    }
+</script>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+    <script type="text/javascript" src="cinx.js"></script>
+</head>
+
+<body>
+
+    <div id="sidenavId" class="sidenav">
+
+    </div>
+
+    <div id="main" class="main">
+
+        <h1>Add Project Phase/Cost Code</h1>
+        <div id="Demo">
+            <label>Organization:
+                    <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
+                </label>
+            <label>Catalog:
+                    <select id='catalogs' name="catalogs" onchange="fillProjectList();fillCostCodeList2();fillPhaseList2()"></select>
+                </label>
+            <br />
+            <br />
+            <label>Project:
+                    <br/>
+                    <select id='projects'></select>
+                </label>
+            <br/>
+            <label>Cost Code Name:
+                    <br/><select id='ccname'></select>
+                </label>
+            <br/>
+            <label>Phase Name:
+                    <br/><select id='phname'></select>
+                </label>
+            <br/>
+            <label>Percent Complete:
+                        <input id='percent' name="percent"></input>
+                    </label>
+            <button id="action" class='button' onclick="createProjectCost()">Execute</button>
+            <br/>
+            <br/>
+            <div id="divResponse"></div>
+        </div>
+
+        <div id="Code" class="tabcontent"></div>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    createSidebar();
+    if (IsLogged()) {
+        fillOrganizationList();
+        fillCatalogList(0);
+        fillProjectList();
+        fillCostCodeList2();
+        fillPhaseList2();
+    } else {
+        document.getElementById("action").disabled = true;
+    }
+
+    function createProjectCost() {
+        document.getElementById("divResponse").innerHTML = "";
+
+        var selected2b = document.getElementById('catalogs').value;
+        var selectedProject = document.getElementById('projects').value;
+        var pName = document.getElementById('ccname').value;
+        var pDescription = document.getElementById('percent').value;
+        var pNumber = document.getElementById('phname').value;
+        var values = `{"material_cost_code":"${pName}","percent_complete":"${pDescription}","phase":"${pNumber}"}`;
+
+        cinxApi.putProjectCost(selected2b, selectedProject, values)
+            .then(function(response) {
+                console.log(response);
+                document.getElementById("divResponse").innerHTML += `Project Cost/Phase <b>${pName}/${pNumber}</b> was added`;
+
+            });
+    }
+</script>
+
+</html>

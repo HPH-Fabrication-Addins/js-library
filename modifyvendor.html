@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="Styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+    <script type="text/javascript" src="cinx.js"></script>
+</head>
+
+<body>
+
+    <div id="sidenavId" class="sidenav">
+
+    </div>
+
+    <div id="main" class="main">
+
+        <h1>Modify Vendor</h1>
+        <div id="Demo">
+            <label>Organization:
+                    <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
+                </label>
+            <label>Catalog:
+                    <select id='catalogs' name="catalogs" onchange="fillModifyVendors('vendors')"></select>
+                </label>
+            </label><br/><br/>
+            <label>Vendor:
+                    <br/><select id='vendors' name="vendors"></select>
+                    
+                </label>
+            <br/>
+            <label>Name:
+                    <input id='vendorName' name="vendorName">
+                                
+                    </input>
+                </label>
+            <label>ID:
+                    <input id='vendorID' name="vendorID"></input>
+                </label>
+            <label>Vendor Status:<br/>
+                    <select id='status' name="status">
+                        <option value="A">Active</option>
+                        <option value="I">Inactive</option>
+                    </select>
+                </label>
+            <br/>
+            <br/>
+            <button id="action" class='button' onclick="modifyVendor()">Execute</button>
+            <br/>
+            <br/>
+            <div id="divResponse">
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    createSidebar();
+    if (IsLogged()) {
+        fillOrganizationList('organizations');
+        fillCatalogList(0);
+        fillModifyVendors('vendors');
+    } else {
+        document.getElementById("action").disabled = true;
+    }
+
+    function modifyVendor(username, password) {
+        document.getElementById("divResponse").innerHTML = "";
+
+        var selected2b = document.getElementById('catalogs').value;
+        var selectedVendor = document.getElementById('vendors').value;
+        var vName = document.getElementById('vendorName').value;
+        var vendorID = document.getElementById('vendorID').value;
+        var vStatus = document.getElementById('status').value;
+        var values = `{"name_primary":"${vName}","vendor_id":"${vendorID}","vendor_status":"${vStatus}"}`;
+
+        cinxApi.modifyVendor(selected2b, selectedVendor, values)
+            .then(function(response) {
+                console.log(response);
+                document.getElementById("divResponse").innerHTML += `Vendor <b>${selectedVendor}</b> was modified`;
+
+            });
+    }
+</script>
+
+</html>
