@@ -58,16 +58,16 @@
 	},
 	"template": {
 		"cinx_guid": "",
-		"number": "", X
-		"name": "", X
+		"number": "",
+		"name": "",
 		"description": "",
 		"tx_sub_type": "",
 		"user_comment": "",
 		"procurement_status": "OPEN",
-		"allow_substitutes": "true", X
+		"allow_substitutes": "true",
 		"cinx_user_guid_assign_to": "",
 		"dates": {
-			"need_by": "", X
+			"need_by": "",
 			"approved": "",
 			"closed": ""
 		},
@@ -91,7 +91,7 @@
 			"fob_type": "",
 			"ship_from": "",
 			"attention": "",
-			"location_type": "JOB SITE", X
+			"location_type": "JOB SITE",
 			"location_name": "",
 			"instructions": ""
 		},
@@ -117,16 +117,16 @@
 		"value": ""
 	},
 	"item_template":{
-			"quantity": "", X
-			"need_by_date": "", X
-			"allow_substitutes": "true", X
-			"hph_code": "", X
+			"quantity": "",
+			"need_by_date": "",
+			"allow_substitutes": "true",
+			"hph_code": "",
 			"org_item_id": "",
 			"org_system_id": "",
 			"mfr_part_number": "",
 			"upc": "",
 			"size": "",
-			"description": "", X
+			"description": "",
 			"mfr_name": "",
 			"item_type": "",
 			"vendor": {
@@ -139,14 +139,14 @@
 			},
 			"delivery": {
 				"deliver_to": "",
-				"location_type": "JOB SITE", X
+				"location_type": "JOB SITE",
 				"instructions": "",
 				"labeling_instructions": "",
 				"packaging_instructions": ""
 			},
 			"work_breakdown": {
 				"work_order_id": "",
-				"work_order_name": "", X
+				"work_order_name": "",
 				"spool_id": "",
 				"spool_number": "", 
 				"building_name": "",
@@ -265,8 +265,8 @@
 
     function createRequisition() {
         const Http = new XMLHttpRequest();
-        const url = 'https://api.dev.cinx.biz/sub/dfed7d88-adf8-5356-8029-fe061c93d0fe/partner/exec/cinx/json-req-import';
-        Http.open("POST", url);
+        const url = 'https://api.dev.cinx.biz/sub/dfed7d88-adf8-5356-8029-fe061c93d0fe/partner/exec/cinx/json-req-import?body=json';
+        Http.open("PUT", url);
         Http.setRequestHeader('Authorization', 'Basic ' + btoa('willstone@cinx.com' + ':' + 'mcphaul18'));
         Http.setRequestHeader('Content-Type', 'application/json');
 
@@ -279,12 +279,13 @@
 
         requisition.number = 'REQ123';
         requisition.name = 'REQUISITION 123';
-        requisition.project.number = 'HQ Oct 23';
+        requisition.project.number = 'WTS-2017-01';
 
         requisition.items.push(item);
         console.log(requisition);
 
-        Http.send(JSON.stringify(requisition));
+        //Http.send(JSON.stringify(requisition));
+		Http.send(requisition);
 
         Http.onreadystatechange = (e) => {
             console.log(Http.responseText)
