@@ -2,21 +2,13 @@
     "response": {
         "status_code": 200,
         "message": "OK",
-        "method": "Item_Link->addItemFromCatalog",
-        "uri": "sub/dfed7d88-adf8-5356-8029-fe061c93d0fe/catalog/add/item",
+        "method": "Project->delete",
+        "uri": "sub/dfed7d88-adf8-5356-8029-fe061c93d0fe/project/e509b84c-bde6-5e37-b35d-e97743babf11/delete",
         "format": "json",
-        "start_time": 1564132149.572,
-        "total_time": 0.75662302970886,
-        "record_count": 1,
+        "start_time": 1564218098.135,
+        "total_time": 0.45163202285767,
+        "record_count": 0,
         "total_count": 0
     },
-    "rows": [
-        {
-            "cinx_id": {
-                "type": "ITEM-LINK",
-                "domain": "org-0001-4030",
-                "id": "01f9c181-c624-5475-ad84-1b7eeb511155"
-            }
-        }
-    ]
+    "rows": []
 }

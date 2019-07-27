@@ -179,6 +179,7 @@ var CinxApi = (function() {
             url: `${apiServer}/sub/${b2bId}/vendor/${commerceId}/details`,
             authenticated: true
         };
+        console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 

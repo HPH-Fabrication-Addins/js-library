@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="Styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+</head>
+
+<body>
+
+    <div id="sidenavId" class="sidenav">
+
+    </div>
+
+    <div id="main" class="main">
+
+        <h1>Project Details</h1>
+
+        <div id="Demo">
+            <label>Organization:
+                <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
+            </label>
+            <label>Catalog:
+                <select id='catalogs' name="catalogs" onchange="fillProjectList()"></select>
+            </label>
+            <label>Project:
+                <select id='projects'></select>
+            </label>
+            <br />
+            <br />
+            <button id="action" class="button" onclick="showProjectDetails()">Execute</button>
+            <br />
+            <br />
+            <div id="divResponse"></div>
+        </div>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    createSidebar();
+    if (IsLogged()) {
+        fillOrganizationList('organizations');
+        fillCatalogList(0);
+        fillProjectList();
+    } else {
+        document.getElementById("action").disabled = true;
+    }
+    function showProjectDetails() {
+        document.getElementById("divResponse").innerHTML = "";
+        var selected2b = document.getElementById('catalogs').value;
+        var selectedProject = document.getElementById('projects').value;
+        cinxApi.getProjectDetails(selected2b, selectedProject)
+            .then(function(response) {
+                console.log(response);
+                document.getElementById("divResponse").innerHTML += "<ul>";
+                response.rows.forEach(el => {
+                    document.getElementById("divResponse").innerHTML += "<li><b>Description: </b>" + el.description + " <b>Project Number: </b>" + el.number + " <b>Status: </b>" + el.status + "</li>";
+                });
+                document.getElementById("divResponse").innerHTML += "</ul>";
+            });
+    }
+</script>
+
+</html>
