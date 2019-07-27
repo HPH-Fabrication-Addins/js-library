@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="Styles.css">
     <script type="text/javascript" src="cinx-api.js"></script>
     <script type="text/javascript" src="demo.js"></script>
-    <script type="text/javascript" src="cinx.js"></script>
 </head>
 
 <body>
@@ -51,7 +50,7 @@
         var selected2b = document.getElementById('catalogs').value;
         var selectedProject = document.getElementById('projects').value;
 
-        cinxApi.deleteProject(username, password, selected2b, selectedProject)
+        cinxApi.deleteProject(selected2b, selectedProject)
             .then(function(response) {
                 console.log(response);
                 document.getElementById("divResponse").innerHTML += `Project <b>${selectedProject}</b> was deleted`;

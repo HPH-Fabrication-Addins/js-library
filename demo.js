@@ -1,5 +1,6 @@
 var cinxApi = new CinxApi();
-cinxApi.setCredentials('burim.ratkoceri@gmail.com', 'cinx123');
+cinxApi.setApiPathAndVersion('http://api.dev.cinx.biz','');
+cinxApi.setCredentials('willstone@cinx.com', 'mcphaul18');
 
 //Change tabs
 function openPage(pageName, elmnt, color) {
@@ -21,7 +22,7 @@ function fillOrganizationList() {
     var guids = window.localStorage.getItem('guids');
     var json = JSON.parse(guids);
     json.rows.forEach(el => {
-        document.getElementById('organizations').innerHTML += `<option value='${json.rows.indexOf(el)}'>${el.org.names.primary}</option>`;
+        document.getElementById('organizations').innerHTML += `<option value='${json.rows.indexOf(el)}'>${el.org.name}</option>`;
     });
 }
 
@@ -29,12 +30,7 @@ function fillCatalogList(ordinal) {
     document.getElementById('catalogs').innerHTML = '';
     var guids = window.localStorage.getItem('guids');
     var json = JSON.parse(guids);
-    json.rows[ordinal].apps.forEach(el => {
-        if (el.app_cdoc == 'couchdb://apps/2d4dde95cc7d1a3d8e830036ff126f60') {
-            document.getElementById('catalogs').innerHTML += `<option value='${el.id}'>${el.data_source_name}</option>`;
-        }
-
-    });
+    document.getElementById('catalogs').innerHTML += `<option value='${json.rows[ordinal].cinx_api_token}'>${json.rows[ordinal].cinx_api_token}</option>`;
 }
 
 function fillProjectList() {
@@ -204,9 +200,9 @@ function IsLogged() {
     var json = window.localStorage.getItem('guids');
     if (json == '[]' || json == null) {
         alert('You need to run the subscription demo first to obtain your subscriptions');
-        console.log(json);
+        //console.log(json);
         return false;
     }
-    console.log(json);
+    //console.log(json);
     return true;
 }

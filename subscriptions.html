@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script type="text/javascript" src="cinx-api.js"></script>
     <script type="text/javascript" src="demo.js"></script>
-    <script type="text/javascript" src="cinx.js"></script>
 </head>
 
 <body>
@@ -38,9 +37,9 @@
                 console.log(response);
                 window.localStorage.setItem('guids', JSON.stringify(response));
                 response.rows.forEach(el => {
-                    document.getElementById('divResponse').innerHTML += `<h3>Organization:${el.org.names.primary}</h3></hr><ul>`;
-                    el.apps.forEach(ap => {
-                        var li = `<li><b>Application Name: </b>${ap.name}<b> Data Source Name: </b>${ap.data_source_name}<b> Type: </b>${ap.type}</li>`;
+                    document.getElementById('divResponse').innerHTML += `<h3>Organization:${el.org.name}</h3></hr><ul>`;
+                    el.subscription.apps.forEach(ap => {
+                        var li = `<li><b>Application Name: </b>${ap.name}<b> Data Source Name: </b>${ap.data_source}<b> Type: </b>${ap.type}</li>`;
                         document.getElementById('divResponse').innerHTML += li;
                     });
                     document.getElementById('divResponse').innerHTML += '</ul>';

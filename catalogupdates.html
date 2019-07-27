@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script type="text/javascript" src="cinx-api.js"></script>
     <script type="text/javascript" src="demo.js"></script>
-    <script type="text/javascript" src="cinx.js"></script>
     <script type="text/javascript" src="download.js"></script>
 </head>
 
@@ -16,10 +15,13 @@
         <h1>Catalog Updates</h1>
         <div id="Demo">
             <label>Organization:
-                <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
+                <select id='organizations' name="organizations" onchange="fillCatalogList(this.value);fillApplications(this.value);"></select>
             </label>
             <label>Catalog:
                 <select id='catalogs' name="catalogs"></select>
+            </label>
+            <label>Application:
+                <select id='application' name="application"></select>
             </label>
             <label>Type:
                     <select id='type' name="type">
@@ -42,13 +44,15 @@
     if (IsLogged()) {
         fillOrganizationList();
         fillCatalogList(0);
+        fillApplications(0);
     } else {
         document.getElementById("action").disabled = true;
     }
 
-    var appId = "5d63bd32-3407-c76c-6fb1-690be3597ff2";
+    var appId = '';
 
     function showNewCatalogUpdates() {
+        appId = document.getElementById("application").value;
         document.getElementById("divResponse").innerHTML = "";
         var fileType = document.getElementById("type").value;
         cinxApi.getCatalogUpdates(appId, fileType)
@@ -66,6 +70,15 @@
                 document.getElementById("divResponse").innerHTML += "</ul>";
             });
     }
+
+function fillApplications(ordinal){
+    document.getElementById('application').innerHTML = '';
+    var guids = window.localStorage.getItem('guids');
+    var json = JSON.parse(guids);
+    json.rows[ordinal].subscription.apps.forEach(el => {
+        document.getElementById('application').innerHTML += `<option value='${el.cinx_app_id}'>${el.name}</option>`;
+    });
+}
 
     function downloadCatalogUpdateFile(updateId) {
         cinxApi.getCatalogUpdateFile(appId, updateId)
