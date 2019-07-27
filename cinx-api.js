@@ -141,20 +141,9 @@ var CinxApi = (function() {
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.postNewProject = function(b2bId, values, callback) {
+    Constructor.prototype.postNewProject = function(cinx_api_token, values, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/project/create?values=${values}`,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, callback);
-    };
-
-    Constructor.prototype.putRequisition = function(b2bId, requisition, callback) {
-        var requestData = {
-            url: `${apiServer}/sub/${b2bId}/partner/exec/cinx/json-req-import`,
-            type: 'PUT',
-            postData: requisition,
+            url: `${apiServer}/sub/${cinx_api_token}/project/create?values=${values}`,
             authenticated: true
         };
         console.log(requestData.url);
@@ -162,36 +151,36 @@ var CinxApi = (function() {
     };
 
     //Vendors
-    Constructor.prototype.getVendors = function(b2bId, callback) {
+    Constructor.prototype.getVendors = function(cinx_api_token, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/vendors`,
+            url: `${apiServer}/sub/${cinx_api_token}/vendors`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.getVendorDetails = function(b2bId, commerceId, callback) {
+    Constructor.prototype.getVendorDetails = function(cinx_api_token, commerceId, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/vendor/${commerceId}/details`,
+            url: `${apiServer}/sub/${cinx_api_token}/vendor/${commerceId}/details`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.postNewVendor = function(b2bId, values, callback) {
+    Constructor.prototype.postNewVendor = function(cinx_api_token, values, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/private/vendor/create?values=${values}`,
+            url: `${apiServer}/sub/${cinx_api_token}/private/vendor/create?values=${values}`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.modifyVendor = function(b2bId, vendorId, values, callback) {
+    Constructor.prototype.modifyVendor = function(cinx_api_token, vendorId, values, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/private/vendor/${vendorId}/modify?values=${values}`,
+            url: `${apiServer}/sub/${cinx_api_token}/private/vendor/${vendorId}/modify?values=${values}`,
             authenticated: true
         };
         console.log(requestData.url);
@@ -226,36 +215,36 @@ var CinxApi = (function() {
     };
 
     //Job Costs
-    Constructor.prototype.putJobCostCostCode = function(b2bId, values, callback) {
+    Constructor.prototype.putJobCostCostCode = function(cinx_api_token, values, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/org-job-cost/modify/material-cost-codes?values=${values}`,
+            url: `${apiServer}/sub/${cinx_api_token}/org-job-cost/modify/material-cost-codes?values=${values}`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.getJobCostCostCodes = function(b2bId, callback) {
+    Constructor.prototype.getJobCostCostCodes = function(cinx_api_token, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/org-job-cost/get-list/material-cost-codes`,
+            url: `${apiServer}/sub/${cinx_api_token}/org-job-cost/get-list/material-cost-codes`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.getJobCostPhases = function(b2bId, callback) {
+    Constructor.prototype.getJobCostPhases = function(cinx_api_token, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/org-job-cost/get-list/phases`,
+            url: `${apiServer}/sub/${cinx_api_token}/org-job-cost/get-list/phases`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.putJobCostPhase = function(b2bId, values, callback) {
+    Constructor.prototype.putJobCostPhase = function(cinx_api_token, values, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/org-job-cost/modify/phases?values=${values}`,
+            url: `${apiServer}/sub/${cinx_api_token}/org-job-cost/modify/phases?values=${values}`,
             authenticated: true
         };
         console.log(requestData.url);
@@ -263,63 +252,63 @@ var CinxApi = (function() {
     };
 
     //Projects
-    Constructor.prototype.getProjects = function(b2bId, callback) {
+    Constructor.prototype.getProjects = function(cinx_api_token, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/boms?type=pml`,
+            url: `${apiServer}/sub/${cinx_api_token}/boms?type=pml`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.getProjectDetails = function(b2bId, projectId, callback) {
+    Constructor.prototype.getProjectDetails = function(cinx_api_token, projectId, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/project/${projectId}/details`,
+            url: `${apiServer}/sub/${cinx_api_token}/project/${projectId}/details`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.modifyProject = function(b2bId, projectId, values, callback) {
+    Constructor.prototype.modifyProject = function(cinx_api_token, projectId, values, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/project/${projectId}/modify?values=${values}`,
+            url: `${apiServer}/sub/${cinx_api_token}/project/${projectId}/modify?values=${values}`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.deleteProject = function(b2bId, projectId, callback) {
+    Constructor.prototype.deleteProject = function(cinx_api_token, projectId, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/project/${projectId}/delete`,
+            url: `${apiServer}/sub/${cinx_api_token}/project/${projectId}/delete`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.getProjectCosts = function(b2bId, projectId, callback) {
+    Constructor.prototype.getProjectCosts = function(cinx_api_token, projectId, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/project/${projectId}/cost-codes`,
+            url: `${apiServer}/sub/${cinx_api_token}/project/${projectId}/cost-codes`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.putProjectCost = function(b2bId, projectId, values, callback) {
+    Constructor.prototype.putProjectCost = function(cinx_api_token, projectId, values, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/project/${projectId}/cost-code/create?values=${values}`,
+            url: `${apiServer}/sub/${cinx_api_token}/project/${projectId}/cost-code/create?values=${values}`,
             authenticated: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
 
-    Constructor.prototype.modifyProjectCost = function(b2bId, pccGuid, values, callback) {
+    Constructor.prototype.modifyProjectCost = function(cinx_api_token, pccGuid, values, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${b2bId}/project-cost-code/${pccGuid}/modify?values=${values}`,
+            url: `${apiServer}/sub/${cinx_api_token}/project-cost-code/${pccGuid}/modify?values=${values}`,
             authenticated: true
         };
         console.log(requestData.url);
@@ -327,25 +316,34 @@ var CinxApi = (function() {
     };
 
     //Requisitions
-    Constructor.prototype.getRequisitionTemplate = function(b2bId, callback) {
+    Constructor.prototype.getRequisitionTemplate = function(cinx_api_token, callback) {
         var requestData = {
-            url: `${apiServer}/2.0/sub/${b2bId}/template/req`,
+            url: `${apiServer}/2.0/sub/${cinx_api_token}/template/req`,
             authenticated: true,
             parse: true
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
+    Constructor.prototype.putRequisition = function(cinx_api_token, requisition, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-req-import`,
+            type: 'PUT',
+            postData: requisition,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
 
+    //Configuration
     Constructor.prototype.setCredentials = function(user, pwd) {
         username = user;
         password = pwd;
     };
-
     Constructor.prototype.setApiPathAndVersion = function(server, version) {
         apiServer = `${server}/${version}`;
     };
-
     Constructor.prototype.setPromiseImplementation = function(PromiseImplementation) {
         var valid = false;
         try {
@@ -364,9 +362,7 @@ var CinxApi = (function() {
             throw new Error('Unsupported implementation of Promises/A+');
         }
     };
-
     return Constructor;
-
 })();
 
 if (typeof module === 'object' && typeof module.exports === 'object') {
