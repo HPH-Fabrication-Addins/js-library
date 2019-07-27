@@ -60,11 +60,44 @@
     };
 
     function createRequisition() {
+        var itemTemplate = '';
+        var transReferenceTemplate = '';
+        var requisitionTemplate = '';
+        
+
 		var selected2b = document.getElementById('catalogs').value;
-		cinxApi.getRequisitionTemplate(selected2b)
-            .then(function(response) {
-                //console.log(response);
+        cinxApi.getRequisitionTemplate(selected2b)
+        .then(function(response) {
+                console.log(response);
+                itemTemplate = JSON.stringify(response.rows[0].template.items[0]);
+                transReferenceTemplate = JSON.stringify(response.rows[0].template.transaction_references[0]);
+                delete response.rows[0].template.items[0]
+                delete response.rows[0].template.transaction_references[0];
+                requisition = response.rows[0].template;
+
+                requisition.name = 'Test Requisition';
+                requisition.number = 'Test 1000';
+
+                let item1 = JSON.parse(itemTemplate);
+                item1.hph_code = 'HPH001';
+                item1.quantity = 5;
+
+                requisition.items.push(item1);
+
+                let item2 = JSON.parse(itemTemplate);
+                item1.hph_code = 'HPH002';
+                item1.quantity = 3;
+
+                requisition.items.push(item2);
+
+                cinxApi.putRequisition(selected2b, requisition)
+                .then(function(response) {
+                        console.log(response);
+                });
+
         });
+    
+    
 
         /* var requisition = JSON.parse(template).template;
         var item = JSON.parse(template).item_template;

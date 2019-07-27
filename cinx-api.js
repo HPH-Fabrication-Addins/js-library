@@ -6,9 +6,6 @@ var CinxApi = (function() {
     var username = '';
     var password = '';
     var promiseImplementation = null;
-    var requisitionTemplate = '';
-    var requisitionItemTemplate = '';
-    var requisitionTransactionReference = '';
 
     var EnableAbortOnPromise = function(promise, onAbort) {
         promise.abort = onAbort;
@@ -333,28 +330,10 @@ var CinxApi = (function() {
     Constructor.prototype.getRequisitionTemplate = function(b2bId, callback) {
         var requestData = {
             url: `${apiServer}/2.0/sub/${b2bId}/template/req`,
-            authenticated: true
+            authenticated: true,
+            parse: true
         };
         console.log(requestData.url);
-        return runRequest(requestData, callback);
-    };
-
-    Constructor.prototype.createRequisition = function(b2bId, callback) {
-        if(requisitionTemplate == '') {
-            this.getRequisitionTemplate(b2bId, callback)
-            .then(function(response) {
-                requisitionItemTemplate = response.rows[0].template.items[0];
-                delete response.rows[0].template.items[0];
-                requisitionTransactionReference = response.rows[0].template.transaction_references[0];
-                delete response.rows[0].template.transaction_references[0];
-                requisitionTemplate = response.rows[0].template;               
-            });            
-            return this.requisitionTemplate;
-        }            
-    };
-
-    Constructor.prototype.createRequistionItem = function() {
-        
         return runRequest(requestData, callback);
     };
 

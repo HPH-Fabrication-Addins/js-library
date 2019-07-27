@@ -2,13 +2,67 @@
     "response": {
         "status_code": 200,
         "message": "OK",
-        "method": "Project->delete",
-        "uri": "sub/dfed7d88-adf8-5356-8029-fe061c93d0fe/project/e509b84c-bde6-5e37-b35d-e97743babf11/delete",
+        "method": "IPU->allUpdates",
+        "uri": "sub/2494df92-e855-5563-826c-05907f9cca22/ipu/updates/all",
         "format": "json",
-        "start_time": 1564218098.135,
-        "total_time": 0.45163202285767,
-        "record_count": 0,
-        "total_count": 0
+        "start_time": 1564235299.356,
+        "total_time": 0.44800806045532,
+        "record_count": 1,
+        "total_count": 1
     },
-    "rows": []
+    "rows": [
+        {
+            "title": "QuoteExpress Mechanical Legacy FULL 08/13/2014",
+            "type": "FULL",
+            "date_published": "2014-08-13 21:12:35",
+            "date_range_start": "2001-01-01",
+            "date_range_end": "2014-08-13",
+            "documents": [
+                {
+                    "type": "DATA-FILE",
+                    "format": "upd",
+                    "size": 80954160,
+                    "formatter": "upd"
+                },
+                {
+                    "type": "BULLETIN",
+                    "format": "xls",
+                    "size": 184320,
+                    "formatter": "xls"
+                },
+                {
+                    "type": "BULLETIN",
+                    "format": "js",
+                    "size": 197514,
+                    "formatter": "js"
+                }
+            ],
+            "transactions": null,
+            "count_of_transactions": 0,
+            "consumed": {
+                "download_date": "2019-07-23",
+                "applied_date": "2019-07-23",
+                "user": {
+                    "name": "Will Stone",
+                    "cinx_id": {
+                        "type": "USER",
+                        "domain": "users",
+                        "id": "185aabe1-3487-5f59-9ad5-c577a76bd392"
+                    }
+                },
+                "cinx_id": {
+                    "type": "SUB-CONSUMPTION",
+                    "domain": "org-0001-4030",
+                    "id": "4ceb4a6e-0513-5745-bf8b-bf9266a28561"
+                }
+            },
+            "export_id": "bulletin_20140813_161048",
+            "created_by": "User Not Found",
+            "cinx_id": {
+                "type": "SUB-UPDATE",
+                "domain": "subscriptions",
+                "id": "7b13257e-25ff-3a03-5d7d-9f4dbe30e091"
+            }
+        }
+    ]
 }
