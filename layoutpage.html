@@ -237,3 +237,18 @@ var template = `{
 			"note": "Authenticated call user credentials required"
 	}]
 }`
+
+
+
+requisition.name = 'Test Requisition 1';
+requisition.number = 'Test 10001';
+
+let item1 = JSON.parse(itemTemplate);
+item1.hph_code = 'HPH001';
+item1.quantity = 5;
+
+requisition.items.push(item1);
+
+let item2 = JSON.parse(itemTemplate);
+item1.hph_code = 'HPH002';
+item1.quantity = 3;

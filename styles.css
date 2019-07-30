@@ -103,7 +103,7 @@ button:hover {
     color: white;
 }
 
-input {
+/* input {
     display: block;
     margin: 5px;
     box-sizing: border-box;
@@ -118,7 +118,9 @@ input {
     -moz-border-radius: 3px;
     padding: 7px;
     outline: none;
-}
+} */
+
+
 
 input:focus {
     border: 1px solid #008CBA;

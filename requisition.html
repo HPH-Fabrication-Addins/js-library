@@ -22,7 +22,38 @@
                         <select id='catalogs' name="catalogs"></select>
                     </label>
             <br />
-            <br />
+            <div id='requisitiondiv' name='requisitiondiv' ><br/>
+                <h2>Requisition Header</h2>
+                <label>Number:</label>
+                <input id='number' name="number">
+                <label>Name:</label>
+                <input id='name' name="name">
+                <label>Allow Substitutes:</label>
+                <select id='allows' name="allows">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                </select></br>
+                <label>Need By:</label>
+                <input type="date" id='needby' name="needby">
+                <label>Delivery Location Type:</label>
+                <select id='loctype' name="loctype"></select></br>
+                <h2>Requisition Items</h2>
+                <label>Quantity:</label>
+                <input id='qty' name="qty"></input>
+                <label>Need By:</label>
+                <input type="date" id='idate' name="idate"><br/>
+                <label>HPH Code:</label>
+                <input id='hph' name="hph"></input>
+                <label>Description:</label>
+                <input id='desc' name="desc">
+                <label>Delivery Location Type:</label>
+                <select id='iloctype' name="iloctype"></select> 
+                <button class="button" id="putitem" onclick="putItem()">Put Item</button>
+                <hr/>
+                <div id="itemslist"></div>
+
+            </div>
+            <br/>
             <div>
             </div>
 
@@ -51,6 +82,38 @@
         document.getElementById("action").disabled = true;
     }
 
+    var requisitionObject = '';
+    var itemTtemplate = '';
+    var transReferenceTemplate = '';
+
+    var reqLocationTypes = '';
+    var itemLocationTypes = '';
+
+    var selected2b = document.getElementById('catalogs').value;
+    cinxApi.getRequisitionTemplate(selected2b)
+        .then(function(response) {
+                this.console.log(response);
+                itemTemplate = JSON.stringify(response.rows[0].template.items[0]);
+                transReferenceTemplate = JSON.stringify(response.rows[0].template.external_references[0]);
+                response.rows[0].template.items = [];
+                response.rows[0].template.external_references = [];
+                requisitionObject = response.rows[0].template;
+
+                reqLocationTypes = response.rows[0].field_options['delivery.location_type'];
+                this.console.log(reqLocationTypes);
+
+                itemLocationTypes = response.rows[0].field_options['items.delivery.location_type'];
+                this.console.log(itemLocationTypes);
+
+                reqLocationTypes.forEach(el => {
+                document.getElementById('loctype').innerHTML += `<option value='${el}'>${el}</option>`;
+                });
+
+                itemLocationTypes.forEach(el => {
+                document.getElementById('iloctype').innerHTML += `<option value='${el}'>${el}</option>`;
+                });
+        });
+
     function removeEmptyProperties(obj) {
         Object.keys(obj).forEach(function(key) {
             if (obj[key] && typeof obj[key] === 'object') removeEmptyProperties(obj[key]); //recursive for objects
@@ -60,65 +123,32 @@
     };
 
     function createRequisition() {
-        var itemTemplate = '';
-        var transReferenceTemplate = '';
-        var requisitionTemplate = '';
+
+        requisitionObject.number = document.getElementById('number').value;
+        requisitionObject.name = document.getElementById('name').value;
+        requisitionObject.dates.need_by = document.getElementById('needby').value;
+        requisitionObject.allow_substitutes = document.getElementById('allows').value;
+        requisitionObject.delivery.location_type = document.getElementById('loctype').value;
         
-
-		var selected2b = document.getElementById('catalogs').value;
-        cinxApi.getRequisitionTemplate(selected2b)
-        .then(function(response) {
-                console.log(response);
-                itemTemplate = JSON.stringify(response.rows[0].template.items[0]);
-                transReferenceTemplate = JSON.stringify(response.rows[0].template.transaction_references[0]);
-                delete response.rows[0].template.items[0]
-                delete response.rows[0].template.transaction_references[0];
-                requisition = response.rows[0].template;
-
-                requisition.name = 'Test Requisition';
-                requisition.number = 'Test 1000';
-
-                let item1 = JSON.parse(itemTemplate);
-                item1.hph_code = 'HPH001';
-                item1.quantity = 5;
-
-                requisition.items.push(item1);
-
-                let item2 = JSON.parse(itemTemplate);
-                item1.hph_code = 'HPH002';
-                item1.quantity = 3;
-
-                requisition.items.push(item2);
-
-                cinxApi.putRequisition(selected2b, requisition)
+        
+        cinxApi.putRequisition(selected2b, requisitionObject)
                 .then(function(response) {
                         console.log(response);
-                });
-
         });
-    
-    
+    }
 
-        /* var requisition = JSON.parse(template).template;
-        var item = JSON.parse(template).item_template;
-
-        item.quantity = 2;
-        item.hph_code = 'HPH123';
-        console.log(item);
-
-        requisition.number = 'REQ123';
-        requisition.name = 'REQUISITION 123';
-        requisition.project.number = 'WTS-2017-01';
-
-        requisition.items.push(item);
-        console.log(requisition);
-
-        Http.send(JSON.stringify(requisition));
-		//Http.send(requisition);
-
-        Http.onreadystatechange = (e) => {
-            console.log(Http.responseText)
-        } */
+    function putItem() {
+        var item = JSON.parse(itemTemplate);
+        item.quantity = document.getElementById('qty').value;
+        item.need_by_date = document.getElementById('idate').value;
+        item.hph_code = document.getElementById('hph').value;
+        item.description = document.getElementById('desc').value;
+        item.delivery.location_type = document.getElementById('iloctype').value;
+        requisitionObject.items.push(item);
+        document.getElementById('itemslist').innerHTML = '';
+        requisitionObject.items.forEach(el => {
+                document.getElementById('itemslist').innerHTML += `HPH Code: ${el.hph_code} Quantity: ${el.quantity} Description: ${el.description} <br/>`;
+                })
     }
 </script>
 

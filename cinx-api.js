@@ -318,7 +318,7 @@ var CinxApi = (function() {
     //Requisitions
     Constructor.prototype.getRequisitionTemplate = function(cinx_api_token, callback) {
         var requestData = {
-            url: `${apiServer}/2.0/sub/${cinx_api_token}/template/req`,
+            url: `${apiServer}/sub/${cinx_api_token}/template/req`,
             authenticated: true,
             parse: true
         };
@@ -327,7 +327,7 @@ var CinxApi = (function() {
     };
     Constructor.prototype.putRequisition = function(cinx_api_token, requisition, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-req-import`,
+            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-req-import?body=json`,
             type: 'PUT',
             postData: requisition,
             authenticated: true
