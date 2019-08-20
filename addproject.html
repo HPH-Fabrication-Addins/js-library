@@ -82,7 +82,7 @@
         var pStatus = document.getElementById('status').value;
         var values = `{"name":"${pName}","description":"${pDescription}","number":"${pNumber}","status":"${pStatus}","dates":[{"type":"SCHEDULED START","value": "2019-06-01"},{"type":"ACTUAL START","value": "2019-06-15"}]}`;
 
-        cinxApi.postNewProject(selected2b, values)
+        cinxApi.putNewProject(selected2b, values)
             .then(function(response) {
                 console.log(response);
                 document.getElementById("divResponse").innerHTML += `Project <b>${pName}</b> was created with the ID: <b>${response.rows[0].cinx_id.id}</b>`;

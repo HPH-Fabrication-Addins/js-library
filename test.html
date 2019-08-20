@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="Styles.css">
+    <script type="text/javascript" src="cinx-api.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+</head>
+
+<body>
+
+    <div id="sidenavId" class="sidenav">
+            
+    </div>
+
+    <div id="main" class="main">
+        <h1>Tests</h1>
+        <br/>
+    </div>
+	
+</body>
+
+<script type="text/javascript">
+    createSidebar();
+    let cinx_api_token = "dfed7d88-adf8-5356-8029-fe061c93d0fe";
+
+/*             cinxApi.pingCinx()
+            .then(function(response) {
+                console.log(response);
+            }); */
+
+/*             cinxApi.getSubscriptions()
+            .then(function(response) {
+                console.log(response);
+                
+            }); */
+/*             cinxApi.getReqTemplate(cinx_api_token)
+            .then(function(response) {
+                console.log(response);
+                
+            }); */
+/*             cinxApi.getProjectTemplate(cinx_api_token)
+            .then(function(response) {
+                console.log(response);
+                
+            }); */
+/*             cinxApi.getVendorTemplate(cinx_api_token)
+            .then(function(response) {
+                console.log(response);
+                
+            }); */
+/*             cinxApi.getPoTemplate(cinx_api_token)
+            .then(function(response) {
+                console.log(response);
+                
+            }); */
+/*             cinxApi.getDeliveryTemplate(cinx_api_token)
+            .then(function(response) {
+                console.log(response);
+                
+            }); */
+/*             cinxApi.getVendorNumber(cinx_api_token)
+            .then(function(response) {
+                console.log(response);
+                
+            }); */
+            cinxApi.getProjectNumber(cinx_api_token)
+            .then(function(response) {
+                console.log(response);
+                
+            });
+
+
+</script>
+
+</html>

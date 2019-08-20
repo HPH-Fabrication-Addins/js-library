@@ -40,7 +40,7 @@ function fillProjectList() {
         .then(function(response) {
             console.log(response);
             response.rows.forEach(el => {
-                document.getElementById('projects').innerHTML += `<option value='${el.cinx_id.id}'>${el.name}</option>`;
+                document.getElementById('projects').innerHTML += `<option value='${el.cinx_guid}'>${el.name}</option>`;
             });
         });
 }
@@ -188,7 +188,8 @@ function createSidebar() {
   <a href="ModifyVendor.html">Modify Vendor</a>
   <!--<a href="DeleteVendor.html">Delete Vendor</a>-->
   <p>Catalog Updates</p>
-  <a href="CatalogUpdates.html">List New Updates</a>`;
+  <a href="CatalogUpdates.html">List New Updates</a>
+  <a href="test.html">TEST</a>`;
 }
 
 //Local storage
