@@ -435,16 +435,66 @@ var CinxApi = (function () {
 
     //PURCHASE ORDERS
     //api_path/2.0/sub/api_token/pos
-    //api_path/2.0/sub/api_token/pos/next-number
+    Constructor.prototype.getPOs = function (cinx_api_token, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/pos`,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
     //api_path/2.0/sub/api_token/po/po_guid
-    //api_path/2.0/sub/api_token//partner/exec/cinx/json-po-import?body=json
+    Constructor.prototype.getPO = function (cinx_api_token, po_guid, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/po/${po_guid}`,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+    //api_path/2.0/sub/api_token/partner/exec/cinx/json-po-import?body=json
+    Constructor.prototype.postPO = function (cinx_api_token, po, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-po-import?body=json`,
+            type: 'POST',
+            postData: po,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
 
 
     //DELIVERIES
     //api_path/2.0/sub/api_token/deliveries
-    //api_path/2.0/sub/api_token/deliveries/next-number
+    Constructor.prototype.getDeliveries = function (cinx_api_token, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/deliveries`,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
     //api_path/2.0/sub/api_token/delivery/delivery_guid
-    //api_path/2.0/sub/api_token//partner/exec/cinx/json-delivery-import?body=json
+    Constructor.prototype.getDelivery = function (cinx_api_token, delivery_guid, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/delivery/${delivery_guid}`,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+    //api_path/2.0/sub/api_token/partner/exec/cinx/json-delivery-import?body=json
+    Constructor.prototype.postDelivery = function (cinx_api_token, delivery, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-delivery-import?body=json`,
+            type: 'POST',
+            postData: delivery,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
 
 
     //ORGANIZATION
