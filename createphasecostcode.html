@@ -1,84 +1,95 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <script type="text/javascript" src="cinx-api.js"></script>
-    <script type="text/javascript" src="demo.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-
-    <div id="sidenavId" class="sidenav">
-
-    </div>
-
-    <div id="main" class="main">
-
-        <h1>Add Project Phase/Cost Code</h1>
-        <div id="Demo">
-            <label>Organization:
-                    <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
-                </label>
-            <label>Catalog:
-                    <select id='catalogs' name="catalogs" onchange="fillProjectList();fillCostCodeList2();fillPhaseList2()"></select>
-                </label>
-            <br />
-            <br />
-            <label>Project:
-                    <br/>
-                    <select id='projects'></select>
-                </label>
-            <br/>
-            <label>Cost Code Name:
-                    <br/><select id='ccname'></select>
-                </label>
-            <br/>
-            <label>Phase Name:
-                    <br/><select id='phname'></select>
-                </label>
-            <br/>
-            <label>Percent Complete:
-                        <input id='percent' name="percent"></input>
-                    </label>
-            <button id="action" class='button' onclick="createProjectCost()">Execute</button>
-            <br/>
-            <br/>
-            <div id="divResponse"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="menu">
+    </nav>
+    <br />
+    <h1>Job Cost - Create Material Cost Code</h1>
+    <br />
+    <div class="container-fluid" id="content">
+        <label for="organizations">Organization:
+            <select class="form-control" id='organizations' onchange="fillCatalogList(this.value)"></select>
+        </label>
+        <label for="catalogs">Catalog:
+            <select class="form-control" id='catalogs'
+                onchange="fillProjectList();fillCostCodeList2();fillPhaseList2()"></select>
+        </label>
+        <label for="projects">Project:
+            <select class="form-control" id='projects'></select>
+        </label>
+        <br />
+        <div>
+            <label for="ccname">Cost Code Name:
+                <select class="form-control" id='ccname'></select>
+            </label>
+            <label for="phname">Phase Name:
+                <select class="form-control" id='phname'></select>
+            </label>
+            <label for="percent">Phase Name:
+                <input class="form-control" id='percent'></input>
+            </label>
         </div>
-
-        <div id="Code" class="tabcontent"></div>
+        <button type="button" class="btn btn-primary" onclick="modifyProjectCost()">Execute</button>
+    </div>
+    <br />
+    <div class="container-fluid" id="response">
     </div>
 
 </body>
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" src="cinx-api.js"></script>
+<script type="text/javascript" src="demo.js"></script>
 <script type="text/javascript">
     createSidebar();
-    if (IsLogged()) {
+    if (isLogged()) {
         fillOrganizationList();
         fillCatalogList(0);
         fillProjectList();
         fillCostCodeList2();
         fillPhaseList2();
-    } else {
-        document.getElementById("action").disabled = true;
     }
 
-    function createProjectCost() {
-        document.getElementById("divResponse").innerHTML = "";
+    var selected2b = document.getElementById('catalogs').value;
+    var ccObject = '';
+
+    cinxApi.getProjectJobCostTemplate(selected2b)
+        .then(function (response) {
+            this.console.log(response);
+            ccObject = response.rows[0].template;
+        });
+
+    function modifyProjectCost() {
+        document.getElementById("response").innerHTML = "";
 
         var selected2b = document.getElementById('catalogs').value;
         var selectedProject = document.getElementById('projects').value;
-        var pName = document.getElementById('ccname').value;
-        var pDescription = document.getElementById('percent').value;
-        var pNumber = document.getElementById('phname').value;
-        var values = `{"material_cost_code":"${pName}","percent_complete":"${pDescription}","phase":"${pNumber}"}`;
+        ccObject.material_cost_code.name = document.getElementById('ccname').value;
+        ccObject.percent_complete = document.getElementById('percent').value;
+        ccObject.phase.name = document.getElementById('phname').value;
 
-        cinxApi.putProjectCost(selected2b, selectedProject, values)
+        cinxApi.postProjectJobCosting(selected2b, ccObject)
             .then(function(response) {
                 console.log(response);
-                document.getElementById("divResponse").innerHTML += `Project Cost/Phase <b>${pName}/${pNumber}</b> was added`;
+                document.getElementById("response").innerHTML += `Project Cost/Phase <b>${pName}/${pNumber}</b> was added`;
 
             });
     }

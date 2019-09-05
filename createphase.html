@@ -1,58 +1,93 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <script type="text/javascript" src="cinx-api.js"></script>
-    <script type="text/javascript" src="demo.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-    <div id="sidenavId" class="sidenav"></div>
-    <div id="main" class="main">
-        <h1>Create Job Cost Phase</h1>
-        <div id="Demo">
-            <label>Organization:
-                <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="menu">
+    </nav>
+    <br />
+    <h1>Job Cost - Create Phase</h1>
+    <br />
+    <div class="container-fluid" id="content">
+        <label for="organizations">Organization:
+            <select class="form-control" id='organizations' onchange="fillCatalogList(this.value)"></select>
+        </label>
+        <label for="catalogs">Catalog:
+            <select class="form-control" id='catalogs'></select>
+        </label>
+        <br />
+        <div>
+            <label for="name">Name:
+                <input class="form-control" id='name'></input>
             </label>
-            <label>Catalog:
-                <select id='catalogs' name="catalogs"></select>
+            <label for="description">Description:
+                <input class="form-control" id='description'></input>
             </label>
-            <br />
-            <br />
-            <div>
-                <label>Name:
-                    <input id='name'></input>
-                </label>
-                <label>Description:
-                    <input id='description'></input>
-                </label>
-                <label>Status:
-                    <br/><select id='status'>
-                        <option value="A">Active</option>
-                        <option value="D">Discontinued</option>
-                    </select>
-                </label>
-                <br />
-                <br />
-                <button class="button" id="action" onclick="createOrModifyPhase()">Execute</button>
-                <br />
-                <br />
-            </div>
-            <div id="divResponse"></div>
+            <label for="status">Status:
+                <select id='status' class="form-control">
+                    <option value="A">Active</option>
+                    <option value="D">Discontinued</option>
+                </select>
+            </label>
         </div>
+        <button type="button" class="btn btn-primary" onclick="createPhase()">Execute</button>
     </div>
+    <br />
+    <div class="container-fluid" id="response">
     </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="cinx-api.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+    <script type="text/javascript">
+        createSidebar();
+        if (isLogged()) {
+            fillOrganizationList();
+            fillCatalogList(0);
+        }
+
+        var selected2b = document.getElementById('catalogs').value;
+        var phaseObject = '';
+
+        cinxApi.getPhaseTemplate(selected2b)
+        .then(function(response) {
+                this.console.log(response);
+                phaseObject = response.rows[0].template;
+        });
+
+        function createPhase() {
+            document.getElementById("response").innerHTML = "";
+            var b2b = document.getElementById('catalogs').value;
+            phaseObject.name = document.getElementById('name').value;
+            phaseObject.description = document.getElementById('description').value;
+            phaseObject.status = document.getElementById('status').value;
+
+            cinxApi.postPhase(b2b, phaseObject)
+                .then(function (response) {
+                    console.log(response);
+                    document.getElementById("response").innerHTML += `Phase <b>${name}</b> was created/modified.`;
+                });
+        }
+    </script>
+
 </body>
-<script type="text/javascript">
-    createSidebar();
-    if (IsLogged()) {
-        fillOrganizationList();
-        fillCatalogList(0);
-    } else {
-        document.getElementById("action").disabled = true;
-    }
-</script>
 
 </html>

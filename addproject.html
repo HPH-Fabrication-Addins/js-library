@@ -1,91 +1,98 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <script type="text/javascript" src="cinx-api.js"></script>
-    <script type="text/javascript" src="demo.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-    <div id="sidenavId" class="sidenav"></div>
-
-    <div id="main" class="main">
-        <h1>Add New Project</h1>
-        <div id="Demo">
-            <label>Organization:
-                        <select id='organizations' name="organizations" onchange="fillCatalogList(this.value)"></select>
-                    </label>
-            <label>Catalog:
-                        <select id='catalogs' name="catalogs"></select>
-                    </label>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="menu">
+            </nav>
             <br />
+            <h1>Create Project</h1>
             <br />
-            <div>
-                <label>Name:
-                                <input id='name'></input>
+            <div class="container-fluid" id="content">
+                <label for="organizations">Organization:
+                    <select class="form-control" id='organizations' onchange="fillCatalogList(this.value)"></select>
+                </label>
+                <label for="catalogs">Catalog:
+                    <select class="form-control" id='catalogs'></select>
+                </label>
+                <br />
+                <div>
+                        <label for="name">Name:
+                            <input class="form-control" id='name'></input>
+                        </label>
+                        <label for="number">Number:
+                                <input class="form-control" id='number'></input>
                             </label>
-                <label>Description:
-                                <input id='description'></input>
-                            </label>
-                <label>Project Number:
-                                    <br/><input id='number'>
-                                                        
-                                            </input>
-                                        </label>
-                <label>Project Status:
-                                               <br/> <select id='status' name="status">
-                                                    <option value="CONCEPTUAL">CONCEPTUAL</option>
-                                                    <option value="DESIGN">DESIGN</option>
-                                                    <option value="BID">BID</option>
-                                                    <option value="CONSTRUCTION">CONSTRUCTION</option>
-                                                    <option value="CLOSEOUT">CLOSEOUT</option>
-                                                    <option value="COMPLETED">COMPLETED</option>
-                                                    <option value="NOT SPECIFIED">NOT SPECIFIED</option>
-                                                </select>
-                                            </label>
+                        <label for="description">Description:
+                            <input class="form-control" id='description'></input>
+                        </label>
+                        <label for="status"> Project Status:
+                            <select id='status' class="form-control">
+                                    <option value="CONCEPTUAL">CONCEPTUAL</option>
+                                    <option value="DESIGN">DESIGN</option>
+                                    <option value="BID">BID</option>
+                                    <option value="CONSTRUCTION">CONSTRUCTION</option>
+                                    <option value="CLOSEOUT">CLOSEOUT</option>
+                                    <option value="COMPLETED">COMPLETED</option>
+                                    <option value="NOT SPECIFIED">NOT SPECIFIED</option>
+                            </select>
+                        </label>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="addProject()">Execute</button>
             </div>
-
-            <br/>
-            <br/>
-            <button class="button" id="action" onclick="addProject()">Execute</button>
-            <br/>
-            <br/>
-            <div id="divResponse"></div>
-        </div>
-
-        <div id="Code" class="tabcontent"></div>
-
-    </div>
-
-    </div>
-
+            <br />
+            <div class="container-fluid" id="response">
+            </div>
 </body>
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+crossorigin="anonymous"></script>
+<script type="text/javascript" src="cinx-api.js"></script>
+<script type="text/javascript" src="demo.js"></script>
 <script type="text/javascript">
     createSidebar();
-    if (IsLogged()) {
+    if (isLogged()) {
         fillOrganizationList('organizations');
         fillCatalogList(0);
-    } else {
-        document.getElementById("action").disabled = true;
     }
 
+    var selected2b = document.getElementById('catalogs').value;
+    var prjObject = '';
+
+        cinxApi.getProjectTemplate(selected2b)
+        .then(function(response) {
+                this.console.log(response);
+                prjObject = response.rows[0].template;
+        });
+
     function addProject() {
-        document.getElementById("divResponse").innerHTML = "";
+        document.getElementById("response").innerHTML = "";
 
         var selected2b = document.getElementById('catalogs').value;
-        var pName = document.getElementById('name').value;
-        var pDescription = document.getElementById('description').value;
-        var pNumber = document.getElementById('number').value;
-        var pStatus = document.getElementById('status').value;
-        var values = `{"name":"${pName}","description":"${pDescription}","number":"${pNumber}","status":"${pStatus}","dates":[{"type":"SCHEDULED START","value": "2019-06-01"},{"type":"ACTUAL START","value": "2019-06-15"}]}`;
+        prjObject.name = document.getElementById('name').value;
+        prjObject.description = document.getElementById('description').value;
+        prjObject.number = document.getElementById('number').value;
+        prjObject.status = document.getElementById('status').value;
 
-        cinxApi.putNewProject(selected2b, values)
+        cinxApi.postProject(selected2b, prjObject)
             .then(function(response) {
                 console.log(response);
-                document.getElementById("divResponse").innerHTML += `Project <b>${pName}</b> was created with the ID: <b>${response.rows[0].cinx_id.id}</b>`;
+                document.getElementById("response").innerHTML += `Project <b>${prjObject.name}</b> was created with the ID: <b>${response.rows[0].cinx_id.id}</b>`;
 
             });
     }

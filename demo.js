@@ -2,21 +2,6 @@ var cinxApi = new CinxApi();
 cinxApi.setApiPathAndVersion('http://api.dev.cinx.biz','2.0');
 cinxApi.setCredentials('willstone@cinx.com', 'mcphaul18');
 
-//Change tabs
-function openPage(pageName, elmnt, color) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablink");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.backgroundColor = "";
-    }
-    document.getElementById(pageName).style.display = "block";
-    elmnt.style.backgroundColor = color;
-}
-
 //Helpers
 function fillOrganizationList() {
     var guids = window.localStorage.getItem('guids');
@@ -25,14 +10,12 @@ function fillOrganizationList() {
         document.getElementById('organizations').innerHTML += `<option value='${json.rows.indexOf(el)}'>${el.org.name}</option>`;
     });
 }
-
 function fillCatalogList(ordinal) {
     document.getElementById('catalogs').innerHTML = '';
     var guids = window.localStorage.getItem('guids');
     var json = JSON.parse(guids);
     document.getElementById('catalogs').innerHTML += `<option value='${json.rows[ordinal].cinx_api_token}'>${json.rows[ordinal].cinx_api_token}</option>`;
 }
-
 function fillProjectList() {
     document.getElementById('projects').innerHTML = '';
     var b2b = document.getElementById('catalogs').value;
@@ -44,7 +27,6 @@ function fillProjectList() {
             });
         });
 }
-
 function fillProjectList2() {
     document.getElementById('projects').innerHTML = '';
     var b2b = document.getElementById('catalogs').value;
@@ -55,33 +37,6 @@ function fillProjectList2() {
                 document.getElementById('projects').innerHTML += `<option value='${el.cinx_id.id}'>${el.name}</option>`;
             });
             fillProjectCostCodeList();
-        });
-}
-
-function fillPhaseList() {
-    document.getElementById('name').innerHTML = '';
-    var b2b = document.getElementById('catalogs').value;
-    cinxApi.getJobCostPhases(b2b)
-        .then(function(response) {
-            console.log(response);
-            response.rows.forEach(el => {
-                document.getElementById('name').innerHTML += `<option value ='${el.name}'>${el.name}</option>`;
-            });
-        });
-}
-
-function createOrModifyPhase() {
-    document.getElementById("divResponse").innerHTML = "";
-    var b2b = document.getElementById('catalogs').value;
-    var name = document.getElementById('name').value;
-    var description = document.getElementById('description').value;
-    var status = document.getElementById('status').value;
-    var values = `{"phases":[{"name":"${name}","description":"${description}","status":"${status}"}]}`;
-
-    cinxApi.putJobCostPhase(b2b, values)
-        .then(function(response) {
-            console.log(response);
-            document.getElementById("divResponse").innerHTML += `Phase <b>${name}</b> was created/modified.`;
         });
 }
 
@@ -101,7 +56,7 @@ function fillProjectCostCodeList() {
 function fillCostCodeList2() {
     document.getElementById('ccname').innerHTML = '';
     var b2b = document.getElementById('catalogs').value;
-    cinxApi.getJobCostCostCodes(b2b)
+    cinxApi.getMaterialCostCodes(b2b)
         .then(function(response) {
             console.log(response);
             response.rows.forEach(el => {
@@ -113,7 +68,7 @@ function fillCostCodeList2() {
 function fillPhaseList2() {
     document.getElementById('phname').innerHTML = '';
     var b2b = document.getElementById('catalogs').value;
-    cinxApi.getJobCostPhases(b2b)
+    cinxApi.getPhases(b2b)
         .then(function(response) {
             console.log(response);
             response.rows.forEach(el => {
@@ -132,78 +87,107 @@ function vendorListSelection(username, password) {
             });
         });
 }
-
 function modifyVendorListSelection() {
     var selected2b = document.getElementById('catalogs').value;
     cinxApi.getVendors(selected2b)
         .then(function(response) {
             console.log(response);
             response.rows.forEach(el => {
-                document.getElementById("vendors").innerHTML += "<option value='" + el.commerce.cinx_id.id + "'>" + el.name + "</option>";
+                document.getElementById("vendors").innerHTML += "<option value='" + el.cinx_commerce_guid + "'>" + el.name + "</option>";
             });
         });
 }
-
 function fillProjects(id) {
     document.getElementById(id).innerHTML = '';
     projectListSelection(username, password);
 }
-
 function fillVendors(id) {
     document.getElementById(id).innerHTML = '';
     vendorListSelection(username, password);
 }
-
 function fillModifyVendors(id) {
     document.getElementById(id).innerHTML = '';
     modifyVendorListSelection();
 }
 //Create side menu
 function createSidebar() {
-    document.getElementById('sidenavId').innerHTML = `
-  <p>Login</p>
-  <a href="Ping.html">Ping CINX</a>
-  <a href="Subscriptions.html">Subscriptions</a>
-  <p>Job Cost</p>
-  <a href="ListPhases.html">List Phases</a>
-  <a href="CreatePhase.html">Create Phase</a>
-  <a href="ModifyPhase.html">Modify Phase</a>
-  <a href="ListCostCodes.html">List Cost Codes</a>
-  <a href="CreateCostCode.html">Create Cost Code</a>
-  <a href="ModifyCostCode.html">Modify Cost Code</a>
-  <p>Projects</p>
-  <a href="ListProjects.html">List Projects</a>
-  <a href="ProjectDetails.html">Project Details</a>
-  <a href="addproject.html">Create Project</a>
-  <a href="ModifyProject.html">Modify Project</a>
-  <a href="DeleteProject.html">Delete Project</a>
-  <a href="ListProjectCosts.html">List Phases/Costs Codes</a>
-  <a href="CreatePhaseCostCode.html">Create Phase/Cost Code</a>
-  <a href="ModifyPhaseCostCode.html">Modify Phase/Cost Code</a>
-  <a href="requisition.html">Create Requisition</a>
-  <p>Vendors</p>
-  <a href="VendorList.html">List Vendors</a>
-  <a href="VendorDetails.html">Vendor Details</a>
-  <a href="addvendor.html">Create Vendor</a>
-  <a href="ModifyVendor.html">Modify Vendor</a>
-  <!--<a href="DeleteVendor.html">Delete Vendor</a>-->
-  <p>Catalog Updates</p>
-  <a href="CatalogUpdates.html">List New Updates</a>
-  <a href="test.html">TEST</a>`;
+    document.getElementById('menu').innerHTML = `
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Getting Started
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="ping.html">Ping</a>
+                <a class="dropdown-item" href="subscriptions.html">Subscriptions</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Job Cost
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="listphases.html">List Phases</a>
+                <a class="dropdown-item" href="createphase.html">Create Phase</a>
+                <!--<a class="dropdown-item" href="modifyphase.html">Modify Phase</a>-->
+                <a class="dropdown-item" href="listcostcodes.html">List Cost Codes</a>
+                <a class="dropdown-item" href="createcostcode.html">Create Cost Code</a>
+                <!--<a class="dropdown-item" href="modifycostcode.html">Modify Cost Code</a>-->
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Projects
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="listprojects.html">List Projects</a>
+                <a class="dropdown-item" href="projectdetails.html">Project Details</a>
+                <a class="dropdown-item" href="addproject.html">Create Project</a>
+                <!--<a class="dropdown-item" href="ModifyProject.html">Modify Project</a>-->
+                <!--<a class="dropdown-item" href="DeleteProject.html">Delete Project</a>-->
+                <a class="dropdown-item" href="ListProjectCosts.html">List Project Costs</a>
+                <a class="dropdown-item" href="CreatePhaseCostCode.html">Create Project Cost</a>
+                <!--<a class="dropdown-item" href="ModifyPhaseCostCode.html">Modify Phase/Cost Code</a>-->
+                <a class="dropdown-item" href="requisition.html">Create Requisition</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Vendors
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="vendorlist.html">List Vendors</a>
+                <a class="dropdown-item" href="vendordetails.html">Vendor Details</a>
+                <a class="dropdown-item" href="addvendor.html">Create Vendor</a>
+                <!--<a class="dropdown-item" href="ModifyVendor.html">Modify Vendor</a>-->
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Catalog Updates
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="CatalogUpdates.html">List New Updates</a>
+            </div>
+        </li>
+    </ul>
+</div>`;
 }
-
 //Local storage
-function DeleteLogin() {
+function deleteLogin() {
     window.localStorage.removeItem('guids');
 }
-
-function IsLogged() {
+function isLogged() {
     var json = window.localStorage.getItem('guids');
     if (json == '[]' || json == null) {
         alert('You need to run the subscription demo first to obtain your subscriptions');
-        //console.log(json);
         return false;
     }
-    //console.log(json);
     return true;
 }

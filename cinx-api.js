@@ -115,11 +115,11 @@ var CinxApi = (function () {
             });
         }
     };
-
     var Constructor = function () { };
     Constructor.prototype = {
         constructor: CinxApi
     };
+
 
     // PING
     //api_path/2.0/ping
@@ -564,8 +564,53 @@ var CinxApi = (function () {
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
+    //api_path/2.0/sub/api_token/template/phase
+    Constructor.prototype.getPhaseTemplate = function (cinx_api_token, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/template/phase`,
+            authenticated: true,
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+    //api_path/2.0/sub/api_token/template/material-cost-code
+    Constructor.prototype.getMaterialCostCodeTemplate = function (cinx_api_token, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/template/material-cost-code`,
+            authenticated: true,
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+    //api_path/2.0/sub/api_token/template/category
+    Constructor.prototype.getCategoryTemplate = function (cinx_api_token, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/template/category`,
+            authenticated: true,
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+    //api_path/2.0/sub/api_token/template/tax-group
+    Constructor.prototype.getTaxGroupTemplate = function (cinx_api_token, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/template/tax-group`,
+            authenticated: true,
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+    //api_path/2.0/sub/api_token/template/project-job-costing
+    Constructor.prototype.getProjectJobCostTemplate = function (cinx_api_token, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/template/project-job-costing`,
+            authenticated: true,
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
 
-    
+
     //AUTONUMBERS
     //api_path/2.0/sub/api_token/auto-number/vendor
     Constructor.prototype.getVendorNumber = function (cinx_api_token, callback) {
@@ -621,15 +666,16 @@ var CinxApi = (function () {
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
-    //api_path/2.0/sub/api_token/auto-number/returns
-    Constructor.prototype.getReturnsNumber = function (cinx_api_token, callback) {
+    //api_path/2.0/sub/api_token/auto-number/return
+    Constructor.prototype.getReturnNumber = function (cinx_api_token, callback) {
         var requestData = {
-            url: `${apiServer}/sub/${cinx_api_token}/auto-number/returns`,
+            url: `${apiServer}/sub/${cinx_api_token}/auto-number/return`,
             authenticated: true,
         };
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
+
 
     //CONFIGURATION
     Constructor.prototype.setCredentials = function (user, pwd) {
