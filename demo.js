@@ -1,5 +1,5 @@
 var cinxApi = new CinxApi();
-cinxApi.setApiPathAndVersion('http://api.dev.cinx.biz','2.0');
+cinxApi.setApiPathAndVersion('https://api.dev.cinx.biz','2.0');
 cinxApi.setCredentials('willstone@cinx.com', 'mcphaul18');
 
 //Helpers
