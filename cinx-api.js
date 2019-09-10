@@ -307,6 +307,18 @@ var CinxApi = (function () {
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
+
+    Constructor.prototype.putPhase = function (cinx_api_token, phase, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-phase-import?body=json`,
+            type: 'PUT',
+            postData: phase,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+
     //api_path/2.0/sub/api_token/org/job-costing/categories
     Constructor.prototype.getCategories = function (cinx_api_token, callback) {
         var requestData = {
@@ -341,6 +353,17 @@ var CinxApi = (function () {
         var requestData = {
             url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-material-cost-code-import?body=json`,
             type: 'POST',
+            postData: material_cost_code,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+
+    Constructor.prototype.putMaterialCostCode = function (cinx_api_token, material_cost_code, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-material-cost-code-import?body=json`,
+            type: 'PUT',
             postData: material_cost_code,
             authenticated: true
         };

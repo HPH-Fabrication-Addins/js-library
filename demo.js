@@ -72,7 +72,7 @@ function fillPhaseList2() {
         .then(function(response) {
             console.log(response);
             response.rows.forEach(el => {
-                document.getElementById('phname').innerHTML += `<option value='${el.name}'>${el.name}</option>`;
+                document.getElementById('phname').innerHTML += `<option value='${el.cinx_guid}'>${el.name}</option>`;
             });
         });
 }
@@ -132,10 +132,10 @@ function createSidebar() {
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="listphases.html">List Phases</a>
                 <a class="dropdown-item" href="createphase.html">Create Phase</a>
-                <!--<a class="dropdown-item" href="modifyphase.html">Modify Phase</a>-->
+                <a class="dropdown-item" href="modifyphase.html">Modify Phase</a>
                 <a class="dropdown-item" href="listcostcodes.html">List Cost Codes</a>
                 <a class="dropdown-item" href="createcostcode.html">Create Cost Code</a>
-                <!--<a class="dropdown-item" href="modifycostcode.html">Modify Cost Code</a>-->
+                <a class="dropdown-item" href="modifycostcode.html">Modify Cost Code</a>
             </div>
         </li>
         <li class="nav-item dropdown">

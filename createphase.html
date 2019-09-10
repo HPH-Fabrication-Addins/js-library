@@ -79,12 +79,14 @@
             phaseObject.name = document.getElementById('name').value;
             phaseObject.description = document.getElementById('description').value;
             phaseObject.status = document.getElementById('status').value;
-
+            
             cinxApi.postPhase(b2b, phaseObject)
-                .then(function (response) {
-                    console.log(response);
-                    document.getElementById("response").innerHTML += `Phase <b>${name}</b> was created/modified.`;
-                });
+            .then(function (response) {
+            console.log(response);
+            document.getElementById("response").innerHTML += `Phase <b>${name}</b> was created/modified.`;
+            }); 
+
+                
         }
     </script>
 

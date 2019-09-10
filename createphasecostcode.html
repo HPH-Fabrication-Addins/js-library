@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="menu">
     </nav>
     <br />
-    <h1>Job Cost - Create Material Cost Code</h1>
+    <h1>Create Project Cost</h1>
     <br />
     <div class="container-fluid" id="content">
         <label for="organizations">Organization:
@@ -36,7 +36,7 @@
             <label for="phname">Phase Name:
                 <select class="form-control" id='phname'></select>
             </label>
-            <label for="percent">Phase Name:
+            <label for="percent">Percent Complete:
                 <input class="form-control" id='percent'></input>
             </label>
         </div>
@@ -84,12 +84,15 @@
         var selectedProject = document.getElementById('projects').value;
         ccObject.material_cost_code.name = document.getElementById('ccname').value;
         ccObject.percent_complete = document.getElementById('percent').value;
-        ccObject.phase.name = document.getElementById('phname').value;
+        ccObject.phase.cinx_guid = document.getElementById('phname').value;
+        ccObject.project.cinx_guid = document.getElementById('projects').value;
+
+        console.log(ccObject);
 
         cinxApi.postProjectJobCosting(selected2b, ccObject)
             .then(function(response) {
                 console.log(response);
-                document.getElementById("response").innerHTML += `Project Cost/Phase <b>${pName}/${pNumber}</b> was added`;
+                document.getElementById("response").innerHTML += `Project Cost/Phase <b>${ccObject.material_cost_code.name}</b> was added`;
 
             });
     }
