@@ -15,7 +15,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="menu">
             </nav>
             <br />
-            <h1>Modify Material Cost Code</h1>
+            <h1>Modify Cost Code</h1>
             <br />
             <div class="container-fluid" id="content">
                 <label for="organizations">Organization:
@@ -83,6 +83,7 @@ crossorigin="anonymous"></script>
             ccObject.name = document.getElementById('newname').value;
             ccObject.description = document.getElementById('description').value;
             ccObject.status = document.getElementById('status').value;
+            removeEmptyProperties(ccObject);
             console.log(ccObject);
             
             cinxApi.putMaterialCostCode(b2b, ccObject)

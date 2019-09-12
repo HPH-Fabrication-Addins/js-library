@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="menu">
     </nav>
     <br />
-    <h1>Job Cost - Create Phase</h1>
+    <h1>Create Phase</h1>
     <br />
     <div class="container-fluid" id="content">
         <label for="organizations">Organization:
@@ -79,6 +79,8 @@
             phaseObject.name = document.getElementById('name').value;
             phaseObject.description = document.getElementById('description').value;
             phaseObject.status = document.getElementById('status').value;
+
+            removeEmptyProperties(phaseObject);
             
             cinxApi.postPhase(b2b, phaseObject)
             .then(function (response) {

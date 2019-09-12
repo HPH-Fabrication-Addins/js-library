@@ -1,5 +1,5 @@
 var cinxApi = new CinxApi();
-cinxApi.setApiPathAndVersion('https://api.dev.cinx.biz','2.0');
+cinxApi.setApiPathAndVersion('http://api.dev.cinx.biz','2.0');
 cinxApi.setCredentials('willstone@cinx.com', 'mcphaul18');
 
 //Helpers
@@ -109,6 +109,13 @@ function fillModifyVendors(id) {
     document.getElementById(id).innerHTML = '';
     modifyVendorListSelection();
 }
+function removeEmptyProperties(obj) {
+    Object.keys(obj).forEach(function (key) {
+        if (obj[key] && typeof obj[key] === 'object') removeEmptyProperties(obj[key]); //recursive for objects
+        else if (obj[key] == null || obj[key] == "") delete obj[key]; //remove empty properties
+        if (typeof obj[key] === 'object' && Object.keys(obj[key]).length == 0) delete obj[key]; //remove empty objects
+    });
+};
 //Create side menu
 function createSidebar() {
     document.getElementById('menu').innerHTML = `
@@ -147,11 +154,11 @@ function createSidebar() {
                 <a class="dropdown-item" href="listprojects.html">List Projects</a>
                 <a class="dropdown-item" href="projectdetails.html">Project Details</a>
                 <a class="dropdown-item" href="addproject.html">Create Project</a>
-                <!--<a class="dropdown-item" href="ModifyProject.html">Modify Project</a>-->
-                <!--<a class="dropdown-item" href="DeleteProject.html">Delete Project</a>-->
-                <a class="dropdown-item" href="ListProjectCosts.html">List Project Costs</a>
-                <a class="dropdown-item" href="CreatePhaseCostCode.html">Create Project Cost</a>
-                <!--<a class="dropdown-item" href="ModifyPhaseCostCode.html">Modify Phase/Cost Code</a>-->
+                <a class="dropdown-item" href="modifyproject.html">Modify Project</a>
+                <!--<a class="dropdown-item" href="deleteproject.html">Delete Project</a>-->
+                <a class="dropdown-item" href="listprojectcosts.html">List Project Costs</a>
+                <a class="dropdown-item" href="createphasecostcode.html">Create Project Cost</a>
+                <!--<a class="dropdown-item" href="modifyphasecostcode.html">Modify Phase/Cost Code</a>-->
                 <a class="dropdown-item" href="requisition.html">Create Requisition</a>
             </div>
         </li>
@@ -164,7 +171,7 @@ function createSidebar() {
                 <a class="dropdown-item" href="vendorlist.html">List Vendors</a>
                 <a class="dropdown-item" href="vendordetails.html">Vendor Details</a>
                 <a class="dropdown-item" href="addvendor.html">Create Vendor</a>
-                <!--<a class="dropdown-item" href="ModifyVendor.html">Modify Vendor</a>-->
+                <a class="dropdown-item" href="ModifyVendor.html">Modify Vendor</a>
             </div>
         </li>
         <li class="nav-item dropdown">

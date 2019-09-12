@@ -185,6 +185,17 @@ var CinxApi = (function () {
         return runRequest(requestData, callback);
     };
     //
+    Constructor.prototype.putProject = function (cinx_api_token, project, callback) {
+        var requestData = {
+            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import?body=json`,
+            type: 'PUT',
+            postData: project,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+    //
     Constructor.prototype.modifyProject = function (cinx_api_token, project_guid, values, callback) {
         var requestData = {
             url: `${apiServer}/sub/${cinx_api_token}/project/${project_guid}/modify?values=${values}`,
@@ -238,6 +249,18 @@ var CinxApi = (function () {
 
             url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import?body=json`,
             type: 'POST',
+            postData: vendor,
+            authenticated: true
+        };
+        console.log(requestData.url);
+        return runRequest(requestData, callback);
+    };
+    //
+    Constructor.prototype.putVendor = function (cinx_api_token, vendor, callback) {
+        var requestData = {
+
+            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import?body=json`,
+            type: 'PUT',
             postData: vendor,
             authenticated: true
         };

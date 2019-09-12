@@ -86,7 +86,7 @@
         ccObject.percent_complete = document.getElementById('percent').value;
         ccObject.phase.cinx_guid = document.getElementById('phname').value;
         ccObject.project.cinx_guid = document.getElementById('projects').value;
-
+        removeEmptyProperties(ccObject);
         console.log(ccObject);
 
         cinxApi.postProjectJobCosting(selected2b, ccObject)

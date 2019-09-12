@@ -89,10 +89,12 @@ crossorigin="anonymous"></script>
         prjObject.number = document.getElementById('number').value;
         prjObject.status = document.getElementById('status').value;
 
+        removeEmptyProperties(prjObject);
+
         cinxApi.postProject(selected2b, prjObject)
             .then(function(response) {
                 console.log(response);
-                document.getElementById("response").innerHTML += `Project <b>${prjObject.name}</b> was created with the ID: <b>${response.rows[0].cinx_id.id}</b>`;
+                document.getElementById("response").innerHTML += `Project <b>${prjObject.name}</b> was created`;
 
             });
     }

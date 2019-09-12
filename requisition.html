@@ -36,8 +36,8 @@
             </label>
             <label for="allows">Allow Substitutes:
                 <select class="form-control" id='allows'>
-                    <option value="true">True</option>
-                    <option value="false">False</option>
+                    <option value=true>True</option>
+                    <option value=false>False</option>
                 </select>
             </label>
             <label for="needby">Need By:
@@ -129,22 +129,15 @@
             });
         });
 
-    function removeEmptyProperties(obj) {
-        Object.keys(obj).forEach(function (key) {
-            if (obj[key] && typeof obj[key] === 'object') removeEmptyProperties(obj[key]); //recursive for objects
-            else if (obj[key] == null || obj[key] == "") delete obj[key]; //remove empty properties
-            if (typeof obj[key] === 'object' && Object.keys(obj[key]).length == 0) delete obj[key]; //remove empty objects
-        });
-    };
-
     function createRequisition() {
 
         requisitionObject.number = document.getElementById('number').value;
         requisitionObject.name = document.getElementById('name').value;
         requisitionObject.dates.need_by = document.getElementById('needby').value;
-        requisitionObject.allow_substitutes = document.getElementById('allows').value;
+        requisitionObject.allow_substitutes = document.getElementById('allows').value == "true" ? true : false;
         requisitionObject.delivery.location_type = document.getElementById('loctype').value;
-
+        removeEmptyProperties(requisitionObject);
+        console.log(requisitionObject);
 
         cinxApi.postReq(selected2b, requisitionObject)
             .then(function (response) {
