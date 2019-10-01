@@ -82,7 +82,7 @@
 
             removeEmptyProperties(phaseObject);
             
-            cinxApi.postPhase(b2b, phaseObject)
+            cinxApi.postPhase(b2b, phaseObject, true)
             .then(function (response) {
             console.log(response);
             document.getElementById("response").innerHTML += `Phase <b>${name}</b> was created/modified.`;
