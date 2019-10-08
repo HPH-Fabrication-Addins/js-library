@@ -85,7 +85,7 @@
 
             //removeEmptyProperties(ccObject);
 
-            cinxApi.postMaterialCostCode(b2b, ccObject)
+            cinxApi.postMaterialCostCode(b2b, ccObject, true)
                 .then(function(response) {
                     console.log(response);
                     document.getElementById("response").innerHTML += `Cost Code <b>${name}</b> was created/modified.`;

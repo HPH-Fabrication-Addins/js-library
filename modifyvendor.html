@@ -93,7 +93,7 @@
 
         //removeEmptyProperties(vendorObject);
 
-        cinxApi.putVendor(selected2b, vendorObject)
+        cinxApi.putVendor(selected2b, vendorObject, true)
             .then(function (response) {
                 console.log(response);
                 document.getElementById("response").innerHTML += `Vendor <b>${name}</b> was created`;

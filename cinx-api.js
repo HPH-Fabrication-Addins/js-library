@@ -174,9 +174,15 @@ var CinxApi = (function () {
         return runRequest(requestData, callback);
     };
     //api_path/2.0/sub/api_token//partner/exec/cinx/json-project-import?body=json
-    Constructor.prototype.postProject = function (cinx_api_token, project, callback) {
+    Constructor.prototype.postProject = function (cinx_api_token, project, synchronous, callback) {
+        var endpointUrl = "";
+        if(synchronous) {
+            endpointUrl = `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import?body=json&synchronous=1`;
+        }else{
+            endpointUrl = `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import?body=json`;
+        }
         var requestData = {
-            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import?body=json`,
+            url: endpointUrl,
             type: 'POST',
             postData: project,
             authenticated: true
@@ -185,20 +191,17 @@ var CinxApi = (function () {
         return runRequest(requestData, callback);
     };
     //
-    Constructor.prototype.putProject = function (cinx_api_token, project, callback) {
+    Constructor.prototype.putProject = function (cinx_api_token, project, synchronous, callback) {
+        var endpointUrl = "";
+        if(synchronous) {
+            endpointUrl = `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import?body=json&synchronous=1`;
+        }else{
+            endpointUrl = `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import?body=json`;
+        }
         var requestData = {
-            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import?body=json`,
+            url: endpointUrl,
             type: 'PUT',
             postData: project,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, callback);
-    };
-    //
-    Constructor.prototype.modifyProject = function (cinx_api_token, project_guid, values, callback) {
-        var requestData = {
-            url: `${apiServer}/sub/${cinx_api_token}/project/${project_guid}/modify?values=${values}`,
             authenticated: true
         };
         console.log(requestData.url);
@@ -244,10 +247,16 @@ var CinxApi = (function () {
         return runRequest(requestData, callback);
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-vendor-import?body=json
-    Constructor.prototype.postVendor = function (cinx_api_token, vendor, callback) {
+    Constructor.prototype.postVendor = function (cinx_api_token, vendor, synchronous, callback) {
+        var endpointUrl = "";
+        if(synchronous) {
+            endpointUrl = `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import?body=json&synchronous=1`;
+        }else{
+            endpointUrl = `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import?body=json`;
+        }
         var requestData = {
 
-            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import?body=json`,
+            url: endpointUrl,
             type: 'POST',
             postData: vendor,
             authenticated: true
@@ -256,10 +265,16 @@ var CinxApi = (function () {
         return runRequest(requestData, callback);
     };
     //
-    Constructor.prototype.putVendor = function (cinx_api_token, vendor, callback) {
+    Constructor.prototype.putVendor = function (cinx_api_token, vendor, synchronous, callback) {
+        var endpointUrl = "";
+        if(synchronous) {
+            endpointUrl = `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import?body=json&synchronous=1`;
+        }else{
+            endpointUrl = `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import?body=json`;
+        }
         var requestData = {
 
-            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import?body=json`,
+            url: endpointUrl,
             type: 'PUT',
             postData: vendor,
             authenticated: true
@@ -267,17 +282,6 @@ var CinxApi = (function () {
         console.log(requestData.url);
         return runRequest(requestData, callback);
     };
-    //
-    Constructor.prototype.modifyVendor = function (cinx_api_token, org_commerce_guid, values, callback) {
-        var requestData = {
-            url: `${apiServer}/sub/${cinx_api_token}/private/vendor/${org_commerce_guid}/modify?values=${values}`,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, callback);
-    };
-
-
     //CATALOGS
     //
     Constructor.prototype.getCatalogUpdates = function (appId, updateType, callback) {
@@ -450,9 +454,15 @@ var CinxApi = (function () {
         return runRequest(requestData, callback);
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-project-job-costing-import?body=json
-    Constructor.prototype.postProjectJobCosting = function (cinx_api_token, project_job_costing, callback) {
+    Constructor.prototype.postProjectJobCosting = function (cinx_api_token, project_job_costing, synchronous, callback) {
+        var endpointUrl = "";
+        if(synchronous) {
+            endpointUrl = `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-job-costing-import?body=json&synchronous=1`;
+        }else{
+            endpointUrl = `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-job-costing-import?body=json`;
+        }
         var requestData = {
-            url: `${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-job-costing-import?body=json`,
+            url: endpointUrl,
             type: 'POST',
             postData: project_job_costing,
             authenticated: true
