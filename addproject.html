@@ -89,7 +89,7 @@ crossorigin="anonymous"></script>
         prjObject.number = document.getElementById('number').value;
         prjObject.status = document.getElementById('status').value;
 
-        removeEmptyProperties(prjObject);
+        //removeEmptyProperties(prjObject);
 
         cinxApi.postProject(selected2b, prjObject)
             .then(function(response) {

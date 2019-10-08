@@ -80,7 +80,7 @@
             phaseObject.description = document.getElementById('description').value;
             phaseObject.status = document.getElementById('status').value;
 
-            removeEmptyProperties(phaseObject);
+            //removeEmptyProperties(phaseObject);
             
             cinxApi.postPhase(b2b, phaseObject, true)
             .then(function (response) {

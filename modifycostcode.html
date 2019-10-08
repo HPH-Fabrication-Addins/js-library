@@ -83,7 +83,7 @@ crossorigin="anonymous"></script>
             ccObject.name = document.getElementById('newname').value;
             ccObject.description = document.getElementById('description').value;
             ccObject.status = document.getElementById('status').value;
-            removeEmptyProperties(ccObject);
+            //removeEmptyProperties(ccObject);
             console.log(ccObject);
             
             cinxApi.putMaterialCostCode(b2b, ccObject)
