@@ -86,10 +86,10 @@
         ccObject.percent_complete = document.getElementById('percent').value;
         ccObject.phase.cinx_guid = document.getElementById('phname').value;
         ccObject.project.cinx_guid = document.getElementById('projects').value;
-        removeEmptyProperties(ccObject);
+        //removeEmptyProperties(ccObject);
         console.log(ccObject);
 
-        cinxApi.postProjectJobCosting(selected2b, ccObject)
+        cinxApi.postProjectJobCosting(selected2b, ccObject, true)
             .then(function(response) {
                 console.log(response);
                 document.getElementById("response").innerHTML += `Project Cost/Phase <b>${ccObject.material_cost_code.name}</b> was added`;

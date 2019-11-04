@@ -94,9 +94,9 @@ crossorigin="anonymous"></script>
         prjObject.cinx_guid = document.getElementById('projects').value;
         console.log(prjObject);
 
-        removeEmptyProperties(prjObject);
+        //removeEmptyProperties(prjObject);
 
-        cinxApi.putProject(selected2b, prjObject)
+        cinxApi.putProject(selected2b, prjObject, true)
             .then(function(response) {
                 console.log(response);
                 document.getElementById("response").innerHTML += `Project <b>${prjObject.name}</b> was modified`;

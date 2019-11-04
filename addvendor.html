@@ -86,9 +86,9 @@
         vendorObject.number = document.getElementById('vendorID').value;
         vendorObject.status = document.getElementById('status').value;
 
-        removeEmptyProperties(vendorObject);
+        //removeEmptyProperties(vendorObject);
 
-        cinxApi.postVendor(selected2b, vendorObject)
+        cinxApi.postVendor(selected2b, vendorObject, true)
             .then(function (response) {
                 console.log(response);
                 document.getElementById("response").innerHTML += `Vendor <b>${name}</b> was created`;
