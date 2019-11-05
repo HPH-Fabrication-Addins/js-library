@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="menu">
+    </nav>
+    <br />
+    <h1>List Requisitions</h1>
+    <br />
+    <div class="container-fluid" id="content">
+        <label for="organizations">Organization:
+            <select class="form-control" id='organizations' onchange="fillCatalogList(this.value)"></select>
+        </label>
+        <label for="catalogs">Catalog:
+            <select class="form-control" id='catalogs'></select>
+        </label>
+        <br />
+        <br />
+        <button type="button" class="btn btn-primary" onclick="showRequisitionList()">Execute</button>
+    </div>
+    <br />
+    <div class="container-fluid" id="response">
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="cinx-api.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+    <script type="text/javascript">
+        createSidebar();
+        if (isLogged()) {
+            fillOrganizationList();
+            fillCatalogList(0);
+        }
+
+        function showRequisitionList() {
+            document.getElementById('response').innerHTML = '';
+            var b2b = document.getElementById('catalogs').value;
+            cinxApi.getReqs(b2b)
+                .then(function (response) {
+                    console.log(response);
+                    response.rows.forEach(el => {
+                        document.getElementById('response').innerHTML += `<b>Project Name: </b>${el.project_name}<b> Project Number: </b>${el.project_number}<b> Requisition Name: </b>${el.name}<br/>`;
+                    });
+                });
+        }
+    </script>
+</body>
+
+</html>

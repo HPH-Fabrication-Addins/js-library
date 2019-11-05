@@ -159,7 +159,9 @@ function createSidebar() {
                 <a class="dropdown-item" href="listprojectcosts.html">List Project Costs</a>
                 <a class="dropdown-item" href="createphasecostcode.html">Create Project Cost</a>
                 <!--<a class="dropdown-item" href="modifyphasecostcode.html">Modify Phase/Cost Code</a>-->
+                <a class="dropdown-item" href="requisitionlist.html">List Requisitions</a>
                 <a class="dropdown-item" href="requisition.html">Create Requisition</a>
+                <a class="dropdown-item" href="deliverieslist.html">List Deliveries</a>
             </div>
         </li>
         <li class="nav-item dropdown">
