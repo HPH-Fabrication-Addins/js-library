@@ -68,15 +68,17 @@
         appId = document.getElementById("application").value;
         document.getElementById("response").innerHTML = "";
         var fileType = document.getElementById("type").value;
-        cinxApi.getCatalogUpdates(appId, fileType)
+        var b2b = document.getElementById('catalogs').value;
+        //cinxApi.getCatalogUpdates(b2b, appId, {status: fileType, type: "FULL"})
+        cinxApi.getCatalogUpdates(b2b, appId, {status: fileType, type: "FULL"})
             .then(function (response) {
                 console.log(response);
                 document.getElementById("response").innerHTML += "<ul>";
                 response.rows.forEach(el => {
-                    document.getElementById("response").innerHTML += `<li><b>Title: </b>${el.title} <b>Published Date: </b>${el.date_published} <b>File ID: </b>${el.cinx_id.id} 
-                <button class="button" onclick="downloadCatalogUpdateFile('${el.cinx_id.id}')">Download</button>`;
+                    document.getElementById("response").innerHTML += `<li><b>Title: </b>${el.title} <b>Published Date: </b>${el.published} <b>File ID: </b>${el.cinx_guid} 
+                <button class="button" onclick="downloadCatalogUpdateFile('${el.cinx_guid}')">Download</button>`;
                     if (fileType !== "Applied") {
-                        document.getElementById("response").innerHTML += `<button class="button" onclick="markCatalogUpdateAsApplied('${el.cinx_id.id}')">Mark Applied</button></li><br/>`;
+                        document.getElementById("response").innerHTML += `<button class="button" onclick="markCatalogUpdateAsApplied('${el.cinx_guid}')">Mark Applied</button></li><br/>`;
                     }
 
                 });
