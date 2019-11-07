@@ -91,7 +91,7 @@
         vendorObject.cinx_commerce_guid = document.getElementById('vendors').value;
         console.log(vendorObject);
 
-        //removeEmptyProperties(vendorObject);
+        removeEmptyProperties(vendorObject);
 
         cinxApi.putVendor(selected2b, vendorObject, true)
             .then(function (response) {

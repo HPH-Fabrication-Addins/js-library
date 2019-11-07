@@ -86,7 +86,7 @@
         vendorObject.number = document.getElementById('vendorID').value;
         vendorObject.status = document.getElementById('status').value;
 
-        //removeEmptyProperties(vendorObject);
+        removeEmptyProperties(vendorObject);
 
         cinxApi.postVendor(selected2b, vendorObject, true)
             .then(function (response) {

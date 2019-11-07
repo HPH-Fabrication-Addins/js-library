@@ -136,7 +136,7 @@
         requisitionObject.dates.need_by = document.getElementById('needby').value;
         requisitionObject.allow_substitutes = document.getElementById('allows').value == "true" ? true : false;
         requisitionObject.delivery.location_type = document.getElementById('loctype').value;
-        //removeEmptyProperties(requisitionObject);
+        removeEmptyProperties(requisitionObject);
         console.log(requisitionObject);
 
         cinxApi.postReq(selected2b, requisitionObject, true)

@@ -83,7 +83,7 @@
 
             console.log(ccObject);
 
-            //removeEmptyProperties(ccObject);
+            removeEmptyProperties(ccObject);
 
             cinxApi.postMaterialCostCode(b2b, ccObject, true)
                 .then(function(response) {
