@@ -267,15 +267,25 @@ var CinxApi = (function () {
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-vendor-import?body=json
     Constructor.prototype.postVendor = function (cinx_api_token, vendor, params, callback) {
-        var requestData = {
 
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import)`, validateParams(params)),
-            type: 'POST',
-            postData: vendor,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        this.getVendorTemplate(cinx_api_token)
+            .then(function (response) {
+                if(validateMandatoryFields(vendor, response.rows[0].required_post) === 1){
+                    var requestData = {
+
+                        url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import)`, validateParams(params)),
+                        type: 'POST',
+                        postData: vendor,
+                        authenticated: true
+                    };
+                    console.log(requestData.url);
+                    return runRequest(requestData, validateCallback(params, callback));
+                }
+                else{
+                    alert('Please fill all mandatory fields with values');
+                }
+            });
+       
     };
     //
     Constructor.prototype.putVendor = function (cinx_api_token, vendor, params, callback) {
@@ -561,7 +571,7 @@ var CinxApi = (function () {
     //api_path/2.0/sub/api_token/addresses
     Constructor.prototype.getOrgAddresses = function (cinx_api_token, params, callback) {
         var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/addresses`, parvalidateParams(params)ams),
+            url: addParameters(`${apiServer}/sub/${cinx_api_token}/addresses`, validateParams(params)),
             authenticated: true
         };
         console.log(requestData.url);
@@ -670,7 +680,20 @@ var CinxApi = (function () {
         return runRequest(requestData, validateCallback(params, callback));
     };
 
+    //VALIDATION
+    function validateMandatoryFields(transaction_object, mandatory_fields) {
+        console.log(Array.isArray(mandatory_fields));
+        mandatory_fields.forEach(el => {
+            var element = el.split('.');
+            console.log(element);
+            if (element.length > 1) {
+                if(typeof element[0] === 'Array'){
 
+                }
+            }
+        });
+        return 0;
+    }
     //AUTONUMBERS
     //api_path/2.0/sub/api_token/auto-number/vendor
     Constructor.prototype.getVendorNumber = function (cinx_api_token, params, callback) {

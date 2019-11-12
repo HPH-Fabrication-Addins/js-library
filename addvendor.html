@@ -88,7 +88,7 @@
 
         removeEmptyProperties(vendorObject);
 
-        cinxApi.postVendor(selected2b, vendorObject, true)
+        cinxApi.postVendor(selected2b, vendorObject, {body: 'json', synchronous: 1})
             .then(function (response) {
                 console.log(response);
                 document.getElementById("response").innerHTML += `Vendor <b>${name}</b> was created`;

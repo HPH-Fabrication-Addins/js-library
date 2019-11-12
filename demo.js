@@ -182,7 +182,8 @@ function createSidebar() {
                 Catalog Updates
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="CatalogUpdates.html">List New Updates</a>
+                <a class="dropdown-item" href="catalogupdates.html">List New Updates</a>
+                <a class="dropdown-item" href="testbed.html">Test</a>
             </div>
         </li>
     </ul>
