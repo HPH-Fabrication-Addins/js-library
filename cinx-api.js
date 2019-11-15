@@ -6,6 +6,7 @@ var CinxApi = (function () {
     var username = '';
     var password = '';
     var promiseImplementation = null;
+    var payloadObject = null;
 
     var EnableAbortOnPromise = function (promise, onAbort) {
         promise.abort = onAbort;
@@ -704,6 +705,9 @@ var CinxApi = (function () {
         // });
         // return 0;
     }
+
+
+
     //AUTONUMBERS
     //api_path/2.0/sub/api_token/auto-number/vendor
     Constructor.prototype.getVendorNumber = function (cinx_api_token, params, callback) {
