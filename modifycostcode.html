@@ -86,7 +86,7 @@ crossorigin="anonymous"></script>
             removeEmptyProperties(ccObject);
             console.log(ccObject);
             
-            cinxApi.putMaterialCostCode(b2b, ccObject, true)
+            cinxApi.putMaterialCostCode(b2b, ccObject, {body: "json", synchronous: 1})
                 .then(function(response) {
                     console.log(response);
                     document.getElementById("response").innerHTML += `Cost Code <b>${name}</b> was created/modified.`;

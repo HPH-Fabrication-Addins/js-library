@@ -682,17 +682,27 @@ var CinxApi = (function () {
 
     //VALIDATION
     function validateMandatoryFields(transaction_object, mandatory_fields) {
-        console.log(Array.isArray(mandatory_fields));
-        mandatory_fields.forEach(el => {
-            var element = el.split('.');
-            console.log(element);
-            if (element.length > 1) {
-                if(typeof element[0] === 'Array'){
-
-                }
-            }
-        });
-        return 0;
+        // var missingValues = false;
+        // console.log(Array.isArray(mandatory_fields));
+        // mandatory_fields.forEach(el => {
+        //     var element = el.split('.');
+        //     var operations = element.length;
+        //     var currentOperation = 0;
+        //     console.log(element);
+        //     if (element.length > 1) {
+        //         while(currentOperation < operations) {
+        //             if(typeof transaction_object[element[currentOperation]] === 'Array') {
+                        
+        //             }
+        //         }
+        //     }
+        //     else if (element.length == 1) {
+        //         if(transaction_object[`${el}`].value == "") {
+        //             missingValues = true;
+        //         }
+        //     }
+        // });
+        // return 0;
     }
     //AUTONUMBERS
     //api_path/2.0/sub/api_token/auto-number/vendor

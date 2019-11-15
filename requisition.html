@@ -139,7 +139,7 @@
         removeEmptyProperties(requisitionObject);
         console.log(requisitionObject);
 
-        cinxApi.postReq(selected2b, requisitionObject, true)
+        cinxApi.postReq(selected2b, requisitionObject, {body: "json"})
             .then(function (response) {
                 console.log(response);
             });

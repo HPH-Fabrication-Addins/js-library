@@ -83,10 +83,10 @@
         phaseObject.description = document.getElementById('description').value;
         phaseObject.status = document.getElementById('status').value;
         phaseObject.cinx_guid = document.getElementById('phname').value;
-        removeEmptyProperties(phaseObject);
+        //removeEmptyProperties(phaseObject);
         console.log(phaseObject);
 
-        cinxApi.putPhase(b2b, phaseObject, true)
+        cinxApi.putPhase(b2b, phaseObject, {body: "json", synchronous: 1})
             .then(function (response) {
                 console.log(response);
                 document.getElementById("response").innerHTML += `Phase <b>${phaseObject.name}</b> was created/modified.`;
