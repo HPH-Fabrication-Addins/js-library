@@ -6,7 +6,6 @@ var CinxApi = (function () {
     var username = '';
     var password = '';
     var promiseImplementation = null;
-    var payloadObject = null;
 
     var EnableAbortOnPromise = function (promise, onAbort) {
         promise.abort = onAbort;
@@ -682,7 +681,17 @@ var CinxApi = (function () {
     };
 
     //VALIDATION
-    function validateMandatoryFields(transaction_object, mandatory_fields) {
+    function validateMandatoryFields(payload, fields) {
+        fields.forEach(el => {
+            var nestedField = el.split('.');
+            if (nestedField.length > 1) {
+                processNestedField(nestedField, 0, payload);
+            }
+            else {
+                //Get from payload and process
+            }
+        });
+        var element = el.split('.');
         // var missingValues = false;
         // console.log(Array.isArray(mandatory_fields));
         // mandatory_fields.forEach(el => {
@@ -706,7 +715,17 @@ var CinxApi = (function () {
         // return 0;
     }
 
-
+    function processNestedField(nestedField, index, payload) {
+        var item = payload[`${nestedFields[index]}`];
+        if(Array.isArray(item)) {
+            item.forEach(el => {
+                processNestedField(nestedField, index + 1, el);
+            });
+        }
+        else {
+            processNestedField(nestedField, index + 1, item);
+        }
+    }
 
     //AUTONUMBERS
     //api_path/2.0/sub/api_token/auto-number/vendor
