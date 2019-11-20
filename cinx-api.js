@@ -6,6 +6,8 @@ var CinxApi = (function () {
     var username = '';
     var password = '';
     var promiseImplementation = null;
+    var fullFieldName = null;
+    var errors = [];
 
     var EnableAbortOnPromise = function (promise, onAbort) {
         promise.abort = onAbort;
@@ -267,12 +269,11 @@ var CinxApi = (function () {
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-vendor-import?body=json
     Constructor.prototype.postVendor = function (cinx_api_token, vendor, params, callback) {
-
+        errors = [];
         this.getVendorTemplate(cinx_api_token)
             .then(function (response) {
-                if(validateMandatoryFields(vendor, response.rows[0].required_post) === 1){
+                if (validateMandatoryFields(vendor, response.rows[0].required_post) === 1) {
                     var requestData = {
-
                         url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import)`, validateParams(params)),
                         type: 'POST',
                         postData: vendor,
@@ -281,11 +282,11 @@ var CinxApi = (function () {
                     console.log(requestData.url);
                     return runRequest(requestData, validateCallback(params, callback));
                 }
-                else{
+                else {
                     alert('Please fill all mandatory fields with values');
                 }
             });
-       
+
     };
     //
     Constructor.prototype.putVendor = function (cinx_api_token, vendor, params, callback) {
@@ -683,15 +684,20 @@ var CinxApi = (function () {
     //VALIDATION
     function validateMandatoryFields(payload, fields) {
         fields.forEach(el => {
-            var nestedField = el.split('.');
+            var nestedField = el[`field`].split('.');
+            var nullable = el[`nullable`];
+            var dataType = el[`data_type`];
             if (nestedField.length > 1) {
-                processNestedField(nestedField, 0, payload);
+                processNestedField(nestedField, 0, payload, nullable, dataType, el[`field`]);
             }
             else {
-                //Get from payload and process
+                var value = payload[`${nestedField[0]}`];
+                if(!value) {
+                    console.log(`No Value for ${nestedField[0]}`);
+                    errors.push(nestedField[0]);
+                }
             }
         });
-        var element = el.split('.');
         // var missingValues = false;
         // console.log(Array.isArray(mandatory_fields));
         // mandatory_fields.forEach(el => {
@@ -702,7 +708,7 @@ var CinxApi = (function () {
         //     if (element.length > 1) {
         //         while(currentOperation < operations) {
         //             if(typeof transaction_object[element[currentOperation]] === 'Array') {
-                        
+
         //             }
         //         }
         //     }
@@ -712,19 +718,36 @@ var CinxApi = (function () {
         //         }
         //     }
         // });
-        // return 0;
+        console.table(errors);
+        return 0;
     }
 
-    function processNestedField(nestedField, index, payload) {
-        var item = payload[`${nestedFields[index]}`];
-        if(Array.isArray(item)) {
-            item.forEach(el => {
-                processNestedField(nestedField, index + 1, el);
-            });
+    function processNestedField(nestedField, index, payload, nullable, dataType, fieldName) {
+        var item = payload[`${nestedField[index]}`];
+        console.log(item);
+
+        if(index === nestedField.length - 1 && index !== 0) {
+            if(!item) {
+                console.log(`No Value for ${fieldName}`);
+                errors.push(fieldName);
+            }
         }
         else {
-            processNestedField(nestedField, index + 1, item);
-        }
+            if(item) {
+                if (Array.isArray(item)) {
+                    item.forEach(el => {
+                        processNestedField(nestedField, index + 1, el, nullable, dataType, fieldName);
+                    });
+                }
+                else {
+                    processNestedField(nestedField, index + 1, item, nullable, dataType, fieldName);
+                }
+            }
+            else {
+                console.log(`No Value for ${fieldName}`);
+                errors.push(fieldName);
+            }
+        }     
     }
 
     //AUTONUMBERS

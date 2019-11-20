@@ -85,6 +85,25 @@
         vendorObject.name = document.getElementById('vendorName').value;
         vendorObject.number = document.getElementById('vendorID').value;
         vendorObject.status = document.getElementById('status').value;
+        vendorObject.addresses = [];
+        vendorObject.addresses.push({address1: 'A',
+                                    address2: null,
+                                    address3: null,
+                                    city: null,
+                                    country: 'USA',
+                                    postal_code: null,
+                                    state: null,
+                                    type: null});
+
+        vendorObject.addresses.push({address1: 'A',
+                                    address2: null,
+                                    address3: null,
+                                    city: null,
+                                    country: 'GER',
+                                    postal_code: null,
+                                    state: null,
+                                    type: null});
+                                    
 
         removeEmptyProperties(vendorObject);
 
