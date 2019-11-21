@@ -86,33 +86,41 @@
         vendorObject.number = document.getElementById('vendorID').value;
         vendorObject.status = document.getElementById('status').value;
         vendorObject.addresses = [];
-        vendorObject.addresses.push({address1: 'A',
-                                    address2: null,
-                                    address3: null,
-                                    city: null,
-                                    country: 'USA',
-                                    postal_code: null,
-                                    state: null,
-                                    type: null});
+        vendorObject.addresses.push({
+            address1: 'A',
+            address2: null,
+            address3: null,
+            city: null,
+            country: null,
+            postal_code: null,
+            state: null,
+            type: null
+        });
 
-        vendorObject.addresses.push({address1: 'A',
-                                    address2: null,
-                                    address3: null,
-                                    city: null,
-                                    country: 'GER',
-                                    postal_code: null,
-                                    state: null,
-                                    type: null});
-                                    
+        vendorObject.addresses.push({
+            address1: 'A',
+            address2: null,
+            address3: null,
+            city: null,
+            postal_code: null,
+            state: null,
+            type: null
+        });
+
 
         removeEmptyProperties(vendorObject);
 
-        cinxApi.postVendor(selected2b, vendorObject, {body: 'json', synchronous: 1})
-            .then(function (response) {
-                console.log(response);
-                document.getElementById("response").innerHTML += `Vendor <b>${name}</b> was created`;
+        // cinxApi.postVendor(selected2b, vendorObject, {body: 'json', synchronous: 1})
+        //     .then(function (response) {
+        //         console.log(response);
+        //         document.getElementById("response").innerHTML += `Vendor <b>${name}</b> was created`;
+        //     }).catch((errors) => {console.log(errors)});
 
-            });
+        cinxApi.postVendor(selected2b, vendorObject, { body: 'json', synchronous: 1 }, function (err, data) {
+            if (err) console.log(err);
+            else console.log('Artist albums', data);
+        });
+
     }
 
     cinxApi.getVendorNumber(selected2b)

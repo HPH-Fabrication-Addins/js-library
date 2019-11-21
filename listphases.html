@@ -60,7 +60,8 @@
                     response.rows.forEach(el => {
                         document.getElementById('response').innerHTML += `<b> Name: </b>${el.name}<b> Description: </b>${el.description}<b> Status: </b>${el.status}<br/>`;
                     });
-                });
+                })
+                .catch((err) => {console.log(err)});
         }
     </script>
 </body>

@@ -6,7 +6,6 @@ var CinxApi = (function () {
     var username = '';
     var password = '';
     var promiseImplementation = null;
-    var fullFieldName = null;
     var errors = [];
 
     var EnableAbortOnPromise = function (promise, onAbort) {
@@ -38,10 +37,11 @@ var CinxApi = (function () {
             return null;
         }
     };
-    var runRequest = function (requestData, callback) {
+    var runRequest = function (requestData, callback, errors) {
         var request = new XMLHttpRequest();
 
         var promiseFunction = function (resolve, reject) {
+
             function success(data) {
                 if (resolve) {
                     resolve(data);
@@ -53,10 +53,10 @@ var CinxApi = (function () {
 
             function failure() {
                 if (reject) {
-                    reject(request);
+                    reject(errors);
                 }
                 if (callback) {
-                    callback(request, null);
+                    callback(errors, null);
                 }
             }
 
@@ -70,7 +70,6 @@ var CinxApi = (function () {
                 request.withCredentials = true;
                 request.setRequestHeader('Authorization', 'Basic ' + btoa(username + ':' + password));
             }
-
             if (requestData.contentType) {
                 request.setRequestHeader('Content-Type', requestData.contentType)
             }
@@ -97,15 +96,21 @@ var CinxApi = (function () {
                 }
             };
 
-            if (type === 'GET') {
-                request.send(null);
-            } else {
-                var postData = null
-                if (requestData.postData) {
-                    postData = requestData.contentType === 'image/jpeg' ? requestData.postData : JSON.stringify(requestData.postData)
-                }
-                request.send(postData);
+            if (errors) {
+                failure();
             }
+            else {
+                if (type === 'GET') {
+                    request.send(null);
+                } else {
+                    var postData = null
+                    if (requestData.postData) {
+                        postData = requestData.contentType === 'image/jpeg' ? requestData.postData : JSON.stringify(requestData.postData)
+                    }
+                    request.send(postData);
+                }
+            }
+
         };
 
         if (callback) {
@@ -270,23 +275,18 @@ var CinxApi = (function () {
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-vendor-import?body=json
     Constructor.prototype.postVendor = function (cinx_api_token, vendor, params, callback) {
         errors = [];
-        this.getVendorTemplate(cinx_api_token)
+        return this.getVendorTemplate(cinx_api_token)
             .then(function (response) {
-                if (validateMandatoryFields(vendor, response.rows[0].required_post) === 1) {
-                    var requestData = {
-                        url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import)`, validateParams(params)),
-                        type: 'POST',
-                        postData: vendor,
-                        authenticated: true
-                    };
-                    console.log(requestData.url);
-                    return runRequest(requestData, validateCallback(params, callback));
-                }
-                else {
-                    alert('Please fill all mandatory fields with values');
-                }
+                validateMandatoryFields(vendor, response.rows[0].required_post);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import`, validateParams(params)),
+                    type: 'POST',
+                    postData: vendor,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
             });
-
     };
     //
     Constructor.prototype.putVendor = function (cinx_api_token, vendor, params, callback) {
@@ -692,48 +692,25 @@ var CinxApi = (function () {
             }
             else {
                 var value = payload[`${nestedField[0]}`];
-                if(!value) {
-                    console.log(`No Value for ${nestedField[0]}`);
+                if (!value) {
                     errors.push(nestedField[0]);
                 }
             }
         });
-        // var missingValues = false;
-        // console.log(Array.isArray(mandatory_fields));
-        // mandatory_fields.forEach(el => {
-        //     var element = el.split('.');
-        //     var operations = element.length;
-        //     var currentOperation = 0;
-        //     console.log(element);
-        //     if (element.length > 1) {
-        //         while(currentOperation < operations) {
-        //             if(typeof transaction_object[element[currentOperation]] === 'Array') {
-
-        //             }
-        //         }
-        //     }
-        //     else if (element.length == 1) {
-        //         if(transaction_object[`${el}`].value == "") {
-        //             missingValues = true;
-        //         }
-        //     }
-        // });
         console.table(errors);
         return 0;
     }
 
     function processNestedField(nestedField, index, payload, nullable, dataType, fieldName) {
         var item = payload[`${nestedField[index]}`];
-        console.log(item);
 
-        if(index === nestedField.length - 1 && index !== 0) {
-            if(!item) {
-                console.log(`No Value for ${fieldName}`);
+        if (index === nestedField.length - 1 && index !== 0) {
+            if (!item) {
                 errors.push(fieldName);
             }
         }
         else {
-            if(item) {
+            if (item) {
                 if (Array.isArray(item)) {
                     item.forEach(el => {
                         processNestedField(nestedField, index + 1, el, nullable, dataType, fieldName);
@@ -744,10 +721,9 @@ var CinxApi = (function () {
                 }
             }
             else {
-                console.log(`No Value for ${fieldName}`);
                 errors.push(fieldName);
             }
-        }     
+        }
     }
 
     //AUTONUMBERS
