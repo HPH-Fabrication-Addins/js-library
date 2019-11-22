@@ -213,25 +213,37 @@ var CinxApi = (function () {
     };
     //api_path/2.0/sub/api_token//partner/exec/cinx/json-project-import?body=json&synchronous=1
     Constructor.prototype.postProject = function (cinx_api_token, project, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import`, validateParams(params)),
-            type: 'POST',
-            postData: project,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        
+        errors = [];
+        return this.getProjectTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(project, response.rows[0].required_post);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import`, validateParams(params)),
+                    type: 'POST',
+                    postData: project,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
     //
     Constructor.prototype.putProject = function (cinx_api_token, project, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import`, validateParams(params)),
-            type: 'PUT',
-            postData: project,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        
+        errors = [];
+        return this.getProjectTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(project, response.rows[0].required_put);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import`, validateParams(params)),
+                    type: 'PUT',
+                    postData: project,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
     //
     Constructor.prototype.deleteProject = function (cinx_api_token, project_guid, params, callback) {
@@ -290,15 +302,19 @@ var CinxApi = (function () {
     };
     //
     Constructor.prototype.putVendor = function (cinx_api_token, vendor, params, callback) {
-        var requestData = {
-
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import`, validateParams(params)),
-            type: 'PUT',
-            postData: vendor,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        errors = [];
+        return this.getVendorTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(vendor, response.rows[0].required_put);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-vendor-import`, validateParams(params)),
+                    type: 'PUT',
+                    postData: vendor,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
 
 
@@ -346,25 +362,37 @@ var CinxApi = (function () {
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-org-phase-import?body=json
     Constructor.prototype.postPhase = function (cinx_api_token, phase, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-phase-import`, validateParams(params)),
-            type: 'POST',
-            postData: phase,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        
+        errors = [];
+        return this.getPhaseTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(phase, response.rows[0].required_post);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-phase-import`, validateParams(params)),
+                    type: 'POST',
+                    postData: phase,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
 
     Constructor.prototype.putPhase = function (cinx_api_token, phase, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-phase-import`, validateParams(params)),
-            type: 'PUT',
-            postData: phase,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        
+        errors = [];
+        return this.getPhaseTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(phase, response.rows[0].required_put);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-phase-import`, validateParams(params)),
+                    type: 'PUT',
+                    postData: phase,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
 
     //api_path/2.0/sub/api_token/org/job-costing/categories
@@ -378,14 +406,20 @@ var CinxApi = (function () {
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-org-category-import?body=json
     Constructor.prototype.postCategory = function (cinx_api_token, category, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-category-import?body=json`, validateParams(params)),
-            type: 'POST',
-            postData: category,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        
+        errors = [];
+        return this.getCategoryTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(category, response.rows[0].required_post);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-category-import?body=json`, validateParams(params)),
+                    type: 'POST',
+                    postData: category,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
     //api_path/2.0/sub/api_token/org/job-costing/material-cost-codes
     Constructor.prototype.getMaterialCostCodes = function (cinx_api_token, params, callback) {
@@ -398,25 +432,37 @@ var CinxApi = (function () {
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-material-cost-code-import?body=json
     Constructor.prototype.postMaterialCostCode = function (cinx_api_token, material_cost_code, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-material-cost-code-import`, validateParams(params)),
-            type: 'POST',
-            postData: material_cost_code,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        
+        errors = [];
+        return this.getMaterialCostCodeTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(material_cost_code, response.rows[0].required_post);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-material-cost-code-import`, validateParams(params)),
+                    type: 'POST',
+                    postData: material_cost_code,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
 
     Constructor.prototype.putMaterialCostCode = function (cinx_api_token, material_cost_code, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-material-cost-code-import`, validateParams(params)),
-            type: 'PUT',
-            postData: material_cost_code,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        
+        errors = [];
+        return this.getMaterialCostCodeTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(material_cost_code, response.rows[0].required_put);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-material-cost-code-import`, validateParams(params)),
+                    type: 'PUT',
+                    postData: material_cost_code,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
     //api_path/2.0/sub/api_token/org/job-costing/tax-groups
     Constructor.prototype.getTaxGroups = function (cinx_api_token, params, callback) {
@@ -429,14 +475,20 @@ var CinxApi = (function () {
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-org-tax-group-import?body=json
     Constructor.prototype.postTaxGroup = function (cinx_api_token, tax_group, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-tax-group-import`, validateParams(params)),
-            type: 'POST',
-            postData: tax_group,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        
+        errors = [];
+        return this.getTaxGroupTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(tax_group, response.rows[0].required_post);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-tax-group-import`, validateParams(params)),
+                    type: 'POST',
+                    postData: tax_group,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
 
 
@@ -452,23 +504,20 @@ var CinxApi = (function () {
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-project-job-costing-import?body=json
     Constructor.prototype.postProjectJobCosting = function (cinx_api_token, project_job_costing, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-job-costing-import`, validateParams(params)),
-            type: 'POST',
-            postData: project_job_costing,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
-    };
-    //
-    Constructor.prototype.modifyProjectJobCosting = function (cinx_api_token, pccGuid, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/project-cost-code/${pccGuid}/modify`, validateParams(params)),
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+       
+        errors = [];
+        return this.getProjectJobCostTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(project_job_costing, response.rows[0].required_post);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-job-costing-import`, validateParams(params)),
+                    type: 'POST',
+                    postData: project_job_costing,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
 
 
@@ -492,15 +541,20 @@ var CinxApi = (function () {
         return runRequest(requestData, validateCallback(params, callback));
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-req-import?body=json
-    Constructor.prototype.postReq = function (cinx_api_token, requisition, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-req-import`, validateParams(params)),
-            type: 'POST',
-            postData: requisition,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+    Constructor.prototype.postReq = function (cinx_api_token, requisition, params, callback) {    
+        errors = [];
+        return this.getReqTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(requisition, response.rows[0].required_post);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-req-import`, validateParams(params)),
+                    type: 'POST',
+                    postData: requisition,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });     
     };
 
 
@@ -525,14 +579,20 @@ var CinxApi = (function () {
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-po-import?body=json
     Constructor.prototype.postPO = function (cinx_api_token, po, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-po-import`, validateParams(params)),
-            type: 'POST',
-            postData: po,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+        
+        errors = [];
+        return this.getPoTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(po, response.rows[0].required_post);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-po-import`, validateParams(params)),
+                    type: 'POST',
+                    postData: po,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
 
 
@@ -556,15 +616,20 @@ var CinxApi = (function () {
         return runRequest(requestData, validateCallback(params, callback));
     };
     //api_path/2.0/sub/api_token/partner/exec/cinx/json-delivery-import?body=json
-    Constructor.prototype.postDelivery = function (cinx_api_token, delivery, params, callback) {
-        var requestData = {
-            url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-delivery-import`, validateParams(params)),
-            type: 'POST',
-            postData: delivery,
-            authenticated: true
-        };
-        console.log(requestData.url);
-        return runRequest(requestData, validateCallback(params, callback));
+    Constructor.prototype.postDelivery = function (cinx_api_token, delivery, params, callback) {      
+        errors = [];
+        return this.getDeliveryTemplate(cinx_api_token)
+            .then(function (response) {
+                validateMandatoryFields(delivery, response.rows[0].required_post);
+                var requestData = {
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-delivery-import`, validateParams(params)),
+                    type: 'POST',
+                    postData: delivery,
+                    authenticated: true
+                };
+                console.log(requestData.url);
+                return runRequest(requestData, validateCallback(params, callback), errors);
+            });
     };
 
 
@@ -692,8 +757,12 @@ var CinxApi = (function () {
             }
             else {
                 var value = payload[`${nestedField[0]}`];
-                if (!value) {
-                    errors.push(nestedField[0]);
+                if (typeof value === 'undefined') {
+                    
+                    errors.push(nestedField[0] + ' is not present');
+                }
+                else if (!value && !nullable){
+                    errors.push(nestedField[0] + ' has no value');
                 }
             }
         });
@@ -705,8 +774,11 @@ var CinxApi = (function () {
         var item = payload[`${nestedField[index]}`];
 
         if (index === nestedField.length - 1 && index !== 0) {
-            if (!item) {
-                errors.push(fieldName);
+            if (typeof item === 'undefined') {
+                errors.push(fieldName + ' is not present');
+            }
+            else if (!item && !nullable){
+                errors.push(fieldName + ' has no value');
             }
         }
         else {
@@ -721,7 +793,7 @@ var CinxApi = (function () {
                 }
             }
             else {
-                errors.push(fieldName);
+                errors.push(fieldName + ' is not present');
             }
         }
     }

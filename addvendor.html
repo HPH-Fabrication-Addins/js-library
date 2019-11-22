@@ -83,7 +83,7 @@
 
         var selected2b = document.getElementById('catalogs').value;
         vendorObject.name = document.getElementById('vendorName').value;
-        vendorObject.number = document.getElementById('vendorID').value;
+        delete vendorObject.number //= document.getElementById('vendorID').value;
         vendorObject.status = document.getElementById('status').value;
         vendorObject.addresses = [];
         vendorObject.addresses.push({
@@ -108,7 +108,7 @@
         });
 
 
-        removeEmptyProperties(vendorObject);
+        //removeEmptyProperties(vendorObject);
 
         // cinxApi.postVendor(selected2b, vendorObject, {body: 'json', synchronous: 1})
         //     .then(function (response) {
