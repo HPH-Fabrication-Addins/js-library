@@ -78,6 +78,7 @@ crossorigin="anonymous"></script>
         .then(function(response) {
                 this.console.log(response);
                 prjObject = response.rows[0].template;
+                prjObject.items = [];
         });
 
     function addProject() {
@@ -89,7 +90,7 @@ crossorigin="anonymous"></script>
         prjObject.number = document.getElementById('number').value;
         prjObject.status = document.getElementById('status').value;
 
-        removeEmptyProperties(prjObject);
+        //removeEmptyProperties(prjObject);
 
         cinxApi.postProject(selected2b, prjObject, {body: "json", synchronous: 1})
             .then(function(response) {

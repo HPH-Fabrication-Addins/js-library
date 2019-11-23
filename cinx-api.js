@@ -777,7 +777,7 @@ var CinxApi = (function () {
             if (typeof item === 'undefined') {
                 errors.push(fieldName + ' is not present');
             }
-            else if (!item && !nullable){
+            else if (!item && !nullable) {
                 errors.push(fieldName + ' has no value');
             }
         }
