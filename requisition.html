@@ -137,12 +137,12 @@
         requisitionObject.allow_substitutes = document.getElementById('allows').value == "true" ? true : false;
         requisitionObject.delivery.location_type = document.getElementById('loctype').value;
         removeEmptyProperties(requisitionObject);
-        console.log(requisitionObject);
+        //console.log(requisitionObject);
 
         cinxApi.postReq(selected2b, requisitionObject, {body: "json"})
             .then(function (response) {
                 console.log(response);
-            });
+            }).catch((errors) => {console.table(errors)});
     }
 
     function putItem() {

@@ -110,16 +110,11 @@
 
         removeEmptyProperties(vendorObject);
 
-        // cinxApi.postVendor(selected2b, vendorObject, {body: 'json', synchronous: 1})
-        //     .then(function (response) {
-        //         console.log(response);
-        //         document.getElementById("response").innerHTML += `Vendor <b>${name}</b> was created`;
-        //     }).catch((errors) => {console.log(errors)});
-
-        cinxApi.postVendor(selected2b, vendorObject, { body: 'json', synchronous: 1 }, function (err, data) {
-            if (err) console.log(err);
-            else console.log('Artist albums', data);
-        });
+        cinxApi.postVendor(selected2b, vendorObject, {body: 'json', synchronous: 1})
+            .then(function (response) {
+                console.log(response);
+                document.getElementById("response").innerHTML += `Vendor <b>${name}</b> was created`;
+            }).catch((errors) => {console.table(errors)});
 
     }
 
@@ -127,7 +122,7 @@
         .then(function (response) {
             this.console.log(response);
             document.getElementById('vendorID').value = response.rows[0].vendor;
-        });
+        }).catch((errors) => {console.table(errors)});
 </script>
 
 </html>

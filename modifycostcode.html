@@ -90,7 +90,7 @@ crossorigin="anonymous"></script>
                 .then(function(response) {
                     console.log(response);
                     document.getElementById("response").innerHTML += `Cost Code <b>${name}</b> was created/modified.`;
-                });
+                }).catch((errors) => {console.table(errors)});
     }
 
     function fillCostCodeList() {

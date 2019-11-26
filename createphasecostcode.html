@@ -94,7 +94,7 @@
                 console.log(response);
                 document.getElementById("response").innerHTML += `Project Cost/Phase <b>${ccObject.material_cost_code.name}</b> was added`;
 
-            });
+            }).catch((errors) => {console.table(errors)});
     }
 </script>
 

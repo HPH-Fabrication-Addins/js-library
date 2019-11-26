@@ -75,7 +75,7 @@
                 console.log(response);
                 document.getElementById("divResponse").innerHTML += `Project Cost/Phase <b>${pcc}</b> was modified`;
 
-            });
+            }).catch((errors) => {console.table(errors)});
     }
 </script>
 

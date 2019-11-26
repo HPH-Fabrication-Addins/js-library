@@ -90,7 +90,7 @@
             .then(function (response) {
                 console.log(response);
                 document.getElementById("response").innerHTML += `Phase <b>${phaseObject.name}</b> was created/modified.`;
-            });
+            }).catch((errors) => {console.table(errors)});
 
 
     }

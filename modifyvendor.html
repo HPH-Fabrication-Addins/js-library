@@ -98,7 +98,7 @@
                 console.log(response);
                 document.getElementById("response").innerHTML += `Vendor <b>${name}</b> was created`;
 
-            });
+            }).catch((errors) => {console.table(errors)});
     }
 </script>
 

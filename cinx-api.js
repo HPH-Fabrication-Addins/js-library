@@ -217,6 +217,11 @@ var CinxApi = (function () {
         errors = [];
         return this.getProjectTemplate(cinx_api_token)
             .then(function (response) {
+                console.log(response);
+                console.log(project);
+                //REMOVE LATER
+                response.rows[0].required_post.forEach(e => {e.enforce = false;});
+                //END REMOVE LATER
                 validateMandatoryFields(project, response.rows[0].required_post);
                 var requestData = {
                     url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-import`, validateParams(params)),
@@ -545,6 +550,11 @@ var CinxApi = (function () {
         errors = [];
         return this.getReqTemplate(cinx_api_token)
             .then(function (response) {
+                console.log(response);
+                console.log(requisition);
+                //REMOVE LATER
+                response.rows[0].required_post.forEach(e => {e.enforce = true;});
+                //END REMOVE LATER
                 validateMandatoryFields(requisition, response.rows[0].required_post);
                 var requestData = {
                     url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-req-import`, validateParams(params)),
@@ -752,8 +762,9 @@ var CinxApi = (function () {
             var nestedField = el[`field`].split('.');
             var nullable = el[`nullable`];
             var dataType = el[`data_type`];
+            var enforce = el[`enforce`];
             if (nestedField.length > 1) {
-                processNestedField(nestedField, 0, payload, nullable, dataType, el[`field`]);
+                processNestedField(nestedField, 0, payload, nullable, dataType, enforce, el[`field`]);
             }
             else {
                 var value = payload[`${nestedField[0]}`];
@@ -766,18 +777,18 @@ var CinxApi = (function () {
                 }
             }
         });
-        console.table(errors);
+        //console.table(errors);
         return 0;
     }
 
-    function processNestedField(nestedField, index, payload, nullable, dataType, fieldName) {
+    function processNestedField(nestedField, index, payload, nullable, dataType, enforce, fieldName) {
         var item = payload[`${nestedField[index]}`];
 
         if (index === nestedField.length - 1 && index !== 0) {
             if (typeof item === 'undefined') {
                 errors.push(fieldName + ' is not present');
             }
-            else if (!item && !nullable) {
+            else if ((item === null | item === '') && !nullable) {
                 errors.push(fieldName + ' has no value');
             }
         }
@@ -785,14 +796,14 @@ var CinxApi = (function () {
             if (item) {
                 if (Array.isArray(item)) {
                     item.forEach(el => {
-                        processNestedField(nestedField, index + 1, el, nullable, dataType, fieldName);
+                        processNestedField(nestedField, index + 1, el, nullable, dataType, enforce, fieldName);
                     });
                 }
                 else {
-                    processNestedField(nestedField, index + 1, item, nullable, dataType, fieldName);
+                    processNestedField(nestedField, index + 1, item, nullable, dataType, enforce, fieldName);
                 }
             }
-            else {
+            else if(enforce) {
                 errors.push(fieldName + ' is not present');
             }
         }
