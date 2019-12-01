@@ -89,6 +89,7 @@ crossorigin="anonymous"></script>
         prjObject.description = document.getElementById('description').value;
         prjObject.number = document.getElementById('number').value;
         prjObject.status = document.getElementById('status').value;
+        delete prjObject.classifications;
 
         removeEmptyProperties(prjObject);
 

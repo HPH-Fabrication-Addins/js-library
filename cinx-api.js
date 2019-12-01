@@ -220,7 +220,7 @@ var CinxApi = (function () {
                 console.log(response);
                 console.log(project);
                 //REMOVE LATER
-                response.rows[0].required_post.forEach(e => {e.enforce = false;});
+                response.rows[0].required_post.forEach(e => {e.enforce = true;});
                 //END REMOVE LATER
                 validateMandatoryFields(project, response.rows[0].required_post);
                 var requestData = {
@@ -553,7 +553,7 @@ var CinxApi = (function () {
                 console.log(response);
                 console.log(requisition);
                 //REMOVE LATER
-                response.rows[0].required_post.forEach(e => {e.enforce = true;});
+                response.rows[0].required_post.forEach(e => {e.enforce = false;});
                 //END REMOVE LATER
                 validateMandatoryFields(requisition, response.rows[0].required_post);
                 var requestData = {
