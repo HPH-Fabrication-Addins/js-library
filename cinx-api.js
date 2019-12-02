@@ -763,16 +763,17 @@ var CinxApi = (function () {
             var nullable = el[`nullable`];
             var dataType = el[`data_type`];
             var enforce = el[`enforce`];
+            var mutual = el[`mutual`];
             if (nestedField.length > 1) {
-                processNestedField(nestedField, 0, payload, nullable, dataType, enforce, el[`field`]);
+                processNestedField(nestedField, 0, payload, nullable, dataType, enforce, mutual, el[`field`]);
             }
             else {
                 var value = payload[`${nestedField[0]}`];
-                if (typeof value === 'undefined') {
+                if (typeof value === 'undefined' && enforce) {
                     
                     errors.push(nestedField[0] + ' is not present');
                 }
-                else if (!value && !nullable){
+                else if (!value && !nullable) {
                     errors.push(nestedField[0] + ' has no value');
                 }
             }
@@ -781,11 +782,11 @@ var CinxApi = (function () {
         return 0;
     }
 
-    function processNestedField(nestedField, index, payload, nullable, dataType, enforce, fieldName) {
+    function processNestedField(nestedField, index, payload, nullable, dataType, enforce, mutual, fieldName) {
         var item = payload[`${nestedField[index]}`];
 
         if (index === nestedField.length - 1 && index !== 0) {
-            if (typeof item === 'undefined') {
+            if (typeof item === 'undefined' && enforce) {
                 errors.push(fieldName + ' is not present');
             }
             else if ((item === null | item === '') && !nullable) {
@@ -796,11 +797,11 @@ var CinxApi = (function () {
             if (item) {
                 if (Array.isArray(item)) {
                     item.forEach(el => {
-                        processNestedField(nestedField, index + 1, el, nullable, dataType, enforce, fieldName);
+                        processNestedField(nestedField, index + 1, el, nullable, dataType, enforce, mututal, fieldName);
                     });
                 }
                 else {
-                    processNestedField(nestedField, index + 1, item, nullable, dataType, enforce, fieldName);
+                    processNestedField(nestedField, index + 1, item, nullable, dataType, enforce, mutual, fieldName);
                 }
             }
             else if(enforce) {
