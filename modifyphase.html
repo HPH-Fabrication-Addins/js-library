@@ -83,7 +83,8 @@
         phaseObject.description = document.getElementById('description').value;
         phaseObject.status = document.getElementById('status').value;
         phaseObject.cinx_guid = document.getElementById('phname').value;
-        //removeEmptyProperties(phaseObject);
+        //phaseObject.cinx_material_cost_code_guid = 'BBBBB';
+        removeEmptyProperties(phaseObject);
         console.log(phaseObject);
 
         cinxApi.putPhase(b2b, phaseObject, {body: "json", synchronous: 1})

@@ -769,9 +769,14 @@ var CinxApi = (function () {
             }
             else {
                 var value = payload[`${nestedField[0]}`];
-                if (typeof value === 'undefined' && enforce) {
+                if (typeof value === 'undefined' && !nullable) {
                     
                     errors.push(nestedField[0] + ' is not present');
+                }
+                else if(mutual) {
+                    if(!value && !checkMutualFlag(mutual, payload)) {
+                        errors.push(nestedField[0] + ' has no value');
+                    }
                 }
                 else if (!value && !nullable) {
                     errors.push(nestedField[0] + ' has no value');
@@ -786,8 +791,13 @@ var CinxApi = (function () {
         var item = payload[`${nestedField[index]}`];
 
         if (index === nestedField.length - 1 && index !== 0) {
-            if (typeof item === 'undefined' && enforce) {
+            if (typeof item === 'undefined' && !nullable) {
                 errors.push(fieldName + ' is not present');
+            }
+            else if (mutual) {
+                if((item === null | item === '') && !checkMutualFlag(mutual, payload)) {
+                    errors.push(nestedField[0] + ' has no value');
+                }
             }
             else if ((item === null | item === '') && !nullable) {
                 errors.push(fieldName + ' has no value');
@@ -797,7 +807,7 @@ var CinxApi = (function () {
             if (item) {
                 if (Array.isArray(item)) {
                     item.forEach(el => {
-                        processNestedField(nestedField, index + 1, el, nullable, dataType, enforce, mututal, fieldName);
+                        processNestedField(nestedField, index + 1, el, nullable, dataType, enforce, mutual, fieldName);
                     });
                 }
                 else {
@@ -808,6 +818,18 @@ var CinxApi = (function () {
                 errors.push(fieldName + ' is not present');
             }
         }
+    }
+
+    function checkMutualFlag(mutual, payload) {
+        var hasValue = false;
+        console.log(mutual);
+        mutual.forEach(el => {
+            var item = payload[`${el}`];
+            if (typeof item !== 'undefined' && item !== null && item !== '') {
+                hasValue = true;
+            }
+        });
+        return hasValue;
     }
 
     //AUTONUMBERS
