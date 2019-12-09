@@ -96,7 +96,7 @@ var CinxApi = (function () {
                 }
             };
 
-            if (errors) {
+            if (errors && Array.isArray(errors) && errors.length > 0) {
                 failure();
             }
             else {
@@ -769,11 +769,11 @@ var CinxApi = (function () {
             }
             else {
                 var value = payload[`${nestedField[0]}`];
-                if (typeof value === 'undefined' && !nullable) {
+                if (typeof value === 'undefined' && enforce == true) {
                     
                     errors.push(nestedField[0] + ' is not present');
                 }
-                else if(mutual) {
+                else if(mutual == true) {
                     if(!value && !checkMutualFlag(mutual, payload)) {
                         errors.push(nestedField[0] + ' has no value');
                     }
