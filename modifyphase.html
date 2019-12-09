@@ -83,12 +83,12 @@
         phaseObject.description = document.getElementById('description').value;
         phaseObject.status = document.getElementById('status').value;
         phaseObject.cinx_guid = document.getElementById('phname').value;
-        //delete phaseObject.cinx_material_cost_code_guid; //= 'BBBBB';
-        phaseObject.cinx_material_cost_code_guid ='BBBBB';
+        delete phaseObject.cinx_material_cost_code_guid; //= 'BBBBB';
+        //phaseObject.cinx_material_cost_code_guid ='BBBBB';
         removeEmptyProperties(phaseObject);
         phaseObject.reference_id = null;
         phaseObject.description = null;
-        phaseObject.material_cost_code_name ='AAAAA';
+        //phaseObject.material_cost_code_name = null;
         console.log(phaseObject);
 
         cinxApi.putPhase(b2b, phaseObject, {body: "json", synchronous: 1})
