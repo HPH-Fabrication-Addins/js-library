@@ -773,7 +773,7 @@ var CinxApi = (function () {
                     
                     errors.push(nestedField[0] + ' is not present');
                 }
-                else if(mutual == true) {
+                else if(mutual) {
                     if(!value && !checkMutualFlag(mutual, payload)) {
                         errors.push(nestedField[0] + ' has no value');
                     }

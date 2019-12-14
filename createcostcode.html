@@ -83,7 +83,14 @@
 
             console.log(ccObject);
 
-            //removeEmptyProperties(ccObject);
+            removeEmptyProperties(ccObject);
+
+            ccObject.reference_id = null;
+            ccObject.description = null;
+            ccObject.category_name ='AAAAA';
+            ccObject.cinx_category_guid = null;
+
+            console.log(ccObject);
 
             cinxApi.postMaterialCostCode(b2b, ccObject, {body: "json", synchronous: 1})
                 .then(function(response) {
