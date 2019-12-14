@@ -791,10 +791,10 @@ var CinxApi = (function () {
         var item = payload[`${nestedField[index]}`];
 
         if (index === nestedField.length - 1 && index !== 0) {
-            if (typeof item === 'undefined' && !nullable) {
+            if (typeof item === 'undefined' && enforce == true) {
                 errors.push(fieldName + ' is not present');
             }
-            else if (mutual) {
+            else if (mutual == true) {
                 if((item === null | item === '') && !checkMutualFlag(mutual, payload)) {
                     errors.push(nestedField[0] + ' has no value');
                 }
@@ -806,6 +806,9 @@ var CinxApi = (function () {
         else {
             if (item) {
                 if (Array.isArray(item)) {
+                    if(item.length < 1) {
+                        return;
+                    }
                     item.forEach(el => {
                         processNestedField(nestedField, index + 1, el, nullable, dataType, enforce, mutual, fieldName);
                     });
@@ -813,9 +816,6 @@ var CinxApi = (function () {
                 else {
                     processNestedField(nestedField, index + 1, item, nullable, dataType, enforce, mutual, fieldName);
                 }
-            }
-            else if(enforce) {
-                errors.push(fieldName + ' is not present');
             }
         }
     }
