@@ -60,7 +60,7 @@ function fillCostCodeList2() {
         .then(function(response) {
             console.log(response);
             response.rows.forEach(el => {
-                document.getElementById('ccname').innerHTML += `<option value='${el.name}'>${el.name}</option>`;
+                document.getElementById('ccname').innerHTML += `<option value='${el.cinx_guid}'>${el.name}</option>`;
             });
         });
 }

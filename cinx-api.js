@@ -63,7 +63,6 @@ var CinxApi = (function () {
             var type = requestData.type || 'GET';
             request.open(type, requestData.url);
             if (requestData.download) {
-
                 request.responseType = 'blob';
             }
             if (requestData.authenticated) {
@@ -799,7 +798,7 @@ var CinxApi = (function () {
                     errors.push(nestedField[0] + ' has no value');
                 }
             }
-            else if ((item === null | item === '') && !nullable) {
+            else if ((item === null | item === '' | typeof item === 'undefined') && !nullable) {
                 errors.push(fieldName + ' has no value');
             }
         }

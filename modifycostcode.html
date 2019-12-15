@@ -84,6 +84,9 @@ crossorigin="anonymous"></script>
             ccObject.description = document.getElementById('description').value;
             ccObject.status = document.getElementById('status').value;
             removeEmptyProperties(ccObject);
+            ccObject.reference_id = null;
+            ccObject.category_name ='EE';
+            ccObject.cinx_category_guid = null;
             console.log(ccObject);
             
             cinxApi.putMaterialCostCode(b2b, ccObject, {body: "json", synchronous: 1})

@@ -63,12 +63,13 @@
         fillApplications(0);
     }
     var appId = '';
+    var b2b = '';
 
     function showNewCatalogUpdates() {
         appId = document.getElementById("application").value;
         document.getElementById("response").innerHTML = "";
         var fileType = document.getElementById("type").value;
-        var b2b = document.getElementById('catalogs').value;
+        b2b = document.getElementById('catalogs').value;
         //cinxApi.getCatalogUpdates(b2b, appId, {status: fileType, type: "FULL"})
         cinxApi.getCatalogUpdates(b2b, appId, {status: fileType, type: "FULL"})
             .then(function (response) {
@@ -96,7 +97,7 @@
     }
 
     function downloadCatalogUpdateFile(updateId) {
-        cinxApi.getCatalogUpdateFile(appId, updateId)
+        cinxApi.getCatalogUpdateFile(b2b, appId, updateId)
             .then(function (response) {
                 download(response, 'download.zip');
             });

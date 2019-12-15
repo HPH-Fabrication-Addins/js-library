@@ -82,11 +82,11 @@
 
         var selected2b = document.getElementById('catalogs').value;
         var selectedProject = document.getElementById('projects').value;
-        ccObject.material_cost_code.name = document.getElementById('ccname').value;
+        ccObject.material_cost_code.cinx_guid = document.getElementById('ccname').value;
         ccObject.percent_complete = document.getElementById('percent').value;
         ccObject.phase.cinx_guid = document.getElementById('phname').value;
         ccObject.project.cinx_guid = document.getElementById('projects').value;
-        //removeEmptyProperties(ccObject);
+        removeEmptyProperties(ccObject);
         console.log(ccObject);
 
         cinxApi.postProjectJobCosting(selected2b, ccObject, {body: "json", synchronous: 1})
