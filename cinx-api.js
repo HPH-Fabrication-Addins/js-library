@@ -442,7 +442,7 @@ var CinxApi = (function () {
             .then(function (response) {
                 validateMandatoryFields(material_cost_code, response.rows[0].required_post);
                 var requestData = {
-                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-material-cost-code-import`, validateParams(params)),
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-material-cost-code-import`, validateParams(params)),
                     type: 'POST',
                     postData: material_cost_code,
                     authenticated: true
@@ -459,7 +459,7 @@ var CinxApi = (function () {
             .then(function (response) {
                 validateMandatoryFields(material_cost_code, response.rows[0].required_put);
                 var requestData = {
-                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-material-cost-code-import`, validateParams(params)),
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-org-material-cost-code-import`, validateParams(params)),
                     type: 'PUT',
                     postData: material_cost_code,
                     authenticated: true
@@ -514,7 +514,7 @@ var CinxApi = (function () {
             .then(function (response) {
                 validateMandatoryFields(project_job_costing, response.rows[0].required_post);
                 var requestData = {
-                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-job-costing-import`, validateParams(params)),
+                    url: addParameters(`${apiServer}/sub/${cinx_api_token}/partner/exec/cinx/json-project-job-cost-import`, validateParams(params)),
                     type: 'POST',
                     postData: project_job_costing,
                     authenticated: true
