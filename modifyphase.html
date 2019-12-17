@@ -42,7 +42,7 @@
             </label>
         </div>
         <br />
-        <button type="button" class="btn btn-primary" onclick="createPhase()">Execute</button>
+        <button id="btnExecute" type="button" class="btn btn-primary" onclick="createPhase()" disabled>Execute</button>
     </div>
     <br />
     <div class="container-fluid" id="response">
@@ -74,6 +74,8 @@
         .then(function (response) {
             this.console.log(response);
             phaseObject = response.rows[0].template;
+
+            document.getElementById("btnExecute").disabled = false;
         });
 
     function createPhase() {

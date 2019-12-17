@@ -50,7 +50,7 @@
                             </select>
                         </label>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="modifyProject()">Execute</button>
+                <button id="btnExecute" type="button" class="btn btn-primary" onclick="modifyProject()" disabled>Execute</button>
             </div>
             <br />
             <div class="container-fluid" id="response">
@@ -82,6 +82,8 @@ crossorigin="anonymous"></script>
         .then(function(response) {
                 this.console.log(response);
                 prjObject = response.rows[0].template;
+
+                document.getElementById("btnExecute").disabled = false;
         });
 
     function modifyProject() {

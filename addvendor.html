@@ -39,7 +39,7 @@
                 </select>
             </label>
         </div>
-        <button type="button" class="btn btn-primary" onclick="addVendor()">Execute</button>
+        <button id="btnExecute" type="button" class="btn btn-primary" onclick="addVendor()" disabled>Execute</button>
     </div>
     <br />
     <div class="container-fluid" id="response">
@@ -75,6 +75,8 @@
             vendorObject.fax_numbers = [];
             vendorObject.id_numbers = [];
             vendorObject.phoneNumbers = [];
+
+            document.getElementById("btnExecute").disabled = false;
         });
 
 

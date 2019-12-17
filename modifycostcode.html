@@ -41,7 +41,7 @@
                             </select>
                         </label>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="createOrModifyCostCode()">Execute</button>
+                <button id="btnExecute" type="button" class="btn btn-primary" onclick="createOrModifyCostCode()" disabled>Execute</button>
             </div>
             <br />
             <div class="container-fluid" id="response">
@@ -73,6 +73,8 @@ crossorigin="anonymous"></script>
         .then(function(response) {
                 this.console.log(response);
                 ccObject = response.rows[0].template;
+
+                document.getElementById("btnExecute").disabled = false;
         });
 
     function createOrModifyCostCode() {
