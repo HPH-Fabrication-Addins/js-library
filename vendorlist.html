@@ -53,7 +53,7 @@
     function vendorList() {
         document.getElementById("response").innerHTML = "";
         var selected2b = document.getElementById('catalogs').value;
-        cinxApi.getVendors(selected2b)
+        cinxApi.getVendors(selected2b, {limit: 30})
             .then(function(response) {
                 console.log(response);
                 document.getElementById("response").innerHTML += "<ul>";
