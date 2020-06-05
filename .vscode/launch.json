@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "file:///Users/burimratkoceri/Documents/GitHub/js-library/index.html",
+            "url": "file:///Users/burimratkoceri/freelance/CINX/code/js-library/index.html",
             "webRoot": "${workspaceFolder}",
             "runtimeArgs": ["--disable-web-security"]
         }
